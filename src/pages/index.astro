@@ -1,16 +1,34 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-const response = await fetch(
+const akashLatestBlock = await fetch(
   "https://api-akash-ia.cosmosia.notional.ventures/blocks/latest"
 ).then((res) => res.json());
-const akashBlock = response.data;
+const akashCurrBlock = akashLatestBlock["block"]["header"]["height"];
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
-    {JSON.stringify(response)}
+    <div class="block-height">
+      Secret Current Block Height: {JSON.stringify(akashCurrBlock)}
+      <br />
+      Evmos Current Block Height: {JSON.stringify(akashCurrBlock)}
+      <br />
+      Akash Current Block Height: {JSON.stringify(akashCurrBlock)}
+      <br />
+      Kujira Current Block Height: {JSON.stringify(akashCurrBlock)}
+    </div>
   </main>
 </Layout>
 
-<style></style>
+<style>
+  main {
+    font-size: 30px;
+    justify-content: center;
+    text-align: center;
+  }
+
+  .block-height {
+    padding-top: 10px;
+  }
+</style>
