@@ -1,35 +1,80 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+// SECRET
 const secretLatestBlock = await fetch(
   "https://api.scrt.network/blocks/latest"
 ).then((res) => res.json());
+const secretCurrBlock = parseInt(
+  secretLatestBlock["block"]["header"]["height"]
+);
+const secretStakingParams = await fetch(
+  "https://api.scrt.network/cosmos/staking/v1beta1/params"
+).then((res) => res.json());
+const secretMaxValidators = secretStakingParams["params"]["max_validators"];
+
+// EVMOS
 const evmosLatestBlock = await fetch(
   "https://evmos-api.polkachu.com/blocks/latest"
 ).then((res) => res.json());
+const evmosCurrBlock = parseInt(evmosLatestBlock["block"]["header"]["height"]);
+const evmosStakingParams = await fetch(
+  "https://evmos-api.polkachu.com/cosmos/staking/v1beta1/params"
+).then((res) => res.json());
+const evmosMaxValidators = evmosStakingParams["params"]["max_validators"];
+
+// AKASH
 const akashLatestBlock = await fetch(
   "https://api-akash-ia.cosmosia.notional.ventures/blocks/latest"
 ).then((res) => res.json());
+const akashCurrBlock = parseInt(akashLatestBlock["block"]["header"]["height"]);
+const akashStakingParams = await fetch(
+  "https://api-akash-ia.cosmosia.notional.ventures/cosmos/staking/v1beta1/params"
+).then((res) => res.json());
+const akashMaxValidators = akashStakingParams["params"]["max_validators"];
+
+// KUJIRA
 const kujiraLatestBlock = await fetch(
   "https://kujira-api.polkachu.com/blocks/latest"
 ).then((res) => res.json());
-
-const secretCurrBlock = secretLatestBlock["block"]["header"]["height"];
-const evmosCurrBlock = evmosLatestBlock["block"]["header"]["height"];
-const akashCurrBlock = akashLatestBlock["block"]["header"]["height"];
-const kujiraCurrBlock = kujiraLatestBlock["block"]["header"]["height"];
+const kujiraCurrBlock = parseInt(
+  kujiraLatestBlock["block"]["header"]["height"]
+);
+const kujiraStakingParams = await fetch(
+  "https://kujira-api.polkachu.com/cosmos/staking/v1beta1/params"
+).then((res) => res.json());
+const kujiraMaxValidators = kujiraStakingParams["params"]["max_validators"];
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
-    <div class="block-height">
-      Secret Current Block Height: {JSON.stringify(secretCurrBlock)}
-      <br />
-      Evmos Current Block Height: {JSON.stringify(evmosCurrBlock)}
-      <br />
-      Akash Current Block Height: {JSON.stringify(akashCurrBlock)}
-      <br />
-      Kujira Current Block Height: {JSON.stringify(kujiraCurrBlock)}
+    <div class="secret">
+      <b>Secret</b>
+      <div class="block-height">Current Block Height: {secretCurrBlock}</div>
+      <div class="max-validators">
+        Number of Validators: {secretMaxValidators}
+      </div>
+    </div>
+    <div class="evmos">
+      <b>Evmos</b>
+      <div class="block-height">Current Block Height: {evmosCurrBlock}</div>
+      <div class="max-validators">
+        Number of Validators: {evmosMaxValidators}
+      </div>
+    </div>
+    <div class="akash">
+      <b>Akash</b>
+      <div class="block-height">Current Block Height: {akashCurrBlock}</div>
+      <div class="max-validators">
+        Number of Validators: {akashMaxValidators}
+      </div>
+    </div>
+    <div class="kujira">
+      <b>Kujira</b>
+      <div class="block-height">Current Block Height: {kujiraCurrBlock}</div>
+      <div class="max-validators">
+        Number of Validators: {kujiraMaxValidators}
+      </div>
     </div>
   </main>
 </Layout>
