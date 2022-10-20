@@ -1,22 +1,35 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+const secretLatestBlock = await fetch(
+  "https://api.scrt.network/blocks/latest"
+).then((res) => res.json());
+const evmosLatestBlock = await fetch(
+  "https://evmos-api.polkachu.com/blocks/latest"
+).then((res) => res.json());
 const akashLatestBlock = await fetch(
   "https://api-akash-ia.cosmosia.notional.ventures/blocks/latest"
 ).then((res) => res.json());
+const kujiraLatestBlock = await fetch(
+  "https://kujira-api.polkachu.com/blocks/latest"
+).then((res) => res.json());
+
+const secretCurrBlock = secretLatestBlock["block"]["header"]["height"];
+const evmosCurrBlock = evmosLatestBlock["block"]["header"]["height"];
 const akashCurrBlock = akashLatestBlock["block"]["header"]["height"];
+const kujiraCurrBlock = kujiraLatestBlock["block"]["header"]["height"];
 ---
 
 <Layout title="Welcome to Astro.">
   <main>
     <div class="block-height">
-      Secret Current Block Height: {JSON.stringify(akashCurrBlock)}
+      Secret Current Block Height: {JSON.stringify(secretCurrBlock)}
       <br />
-      Evmos Current Block Height: {JSON.stringify(akashCurrBlock)}
+      Evmos Current Block Height: {JSON.stringify(evmosCurrBlock)}
       <br />
       Akash Current Block Height: {JSON.stringify(akashCurrBlock)}
       <br />
-      Kujira Current Block Height: {JSON.stringify(akashCurrBlock)}
+      Kujira Current Block Height: {JSON.stringify(kujiraCurrBlock)}
     </div>
   </main>
 </Layout>
