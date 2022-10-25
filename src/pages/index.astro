@@ -20,6 +20,16 @@ for (let i = 0; i < secretValidators["result"]["validators"].length; i++) {
     jackalSecretRank = i + 1;
   }
 }
+
+interface Chain {
+  api: string,
+  address: string,
+}
+
+async function getLatestBlocks(chain: Chain) {
+  const latestBlocks = await fetch(`${chain.api}/blocks/latest`).then((res) => res.json());
+  return latestBlocks["block"]["header"]["height"];
+}
 ---
 
 <Layout title="Jackal Labs Dashboard">
