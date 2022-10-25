@@ -1,47 +1,41 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+// Chain Interface 
 interface Chain {
   api: string,
   address: string,
+  height: number,
 }
 
+// Chain objects
 const secretChain: Chain = {
   api: "https://api.scrt.network",
   address: "secretvalcons1qz6dgmf0rgk8p08wznlnmqe7hnm4qydftvaajj",
+  height: 0,
 }
-
-const evmosChain: Chain = {
-  api: "https://evmos-api.polkachu.com",
-  address: "evmos1fpjf8aywxg9qxexfwu9lanlgw58f5fhqyj79xt",
-}
-
-const akashChain: Chain = {
-  api: "https://api-akash-ia.cosmosia.notional.ventures",
-  address: "akash1mryswr20mxltwhlqulsk0hnscmmxw32tad7yxx",
-}
-
-const kujiraChain: Chain = {
-  api: "https://kujira-api.polkachu.com",
-  address: "kujira1uf9knclap4a0vrqn8dj726anyhst7l02nymu3j",
-}
-
 
 async function getCurrentBlock(chain: Chain) {
   const latestBlocks = await fetch(`${chain.api}/blocks/latest`).then((res) => res.json());
   return parseInt(latestBlocks["block"]["header"]["height"]);
 }
 
+async function getValidators(chain: Chain) {
+  const validators = await fetch(`${chain.api}/validatorsets/${chain.height-30}`).then((res) => res.json());
+  return validators;
+}
+
 // Secret Info
-const secretCurrBlock = await getCurrentBlock({api: "https://api.scrt.network", address: ""}),
-secretValidators = await fetch(`https://api.scrt.network/validatorsets/${secretCurrBlock-30}`).then((res) => res.json()),
-secretMaxValidators = secretValidators["result"]["validators"].length;
-var jackalSecretRank;
+const secretHeight = await getCurrentBlock(secretChain);
+secretChain.height = secretHeight; // update chain height on api call
+const secretValidators = await getValidators(secretChain);
+const secretMaxValidators = secretValidators["result"]["validators"].length;
+var secretJackalRank;
 
 // find rank by iterating through all validators
-for (let i = 0; i < secretValidators["result"]["validators"].length; i++) {
+for (let i = 0; i < secretMaxValidators; i++) {
   if (secretValidators["result"]["validators"][i]["address"] == secretChain.address) {
-    jackalSecretRank = i + 1;
+    secretJackalRank = i + 1;
   }
 }
 ---
@@ -50,11 +44,11 @@ for (let i = 0; i < secretValidators["result"]["validators"].length; i++) {
   <main>
     <div class="secret">
       <b>Secret</b>
-      <div class="block-height">Current Block Height: {secretCurrBlock}</div>
+      <div class="block-height">Current Block Height: {secretHeight}</div>
       <div class="max-validators">
         Number of Validators: {secretMaxValidators}
       </div>
-      <div class="rank">Rank: {jackalSecretRank}</div>
+      <div class="rank">Rank: {secretJackalRank}</div>
     </div>
   </main>
 </Layout>
