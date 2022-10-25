@@ -7,8 +7,8 @@ export interface Chain {
 }
 const { title, api, address } = Astro.props;
 
-// Chain objects
-const secretChain: Chain = {
+// Chain object
+const validatorChain: Chain = {
     title: `${title}`,
     api: `${api}`,
     address: `${address}`,
@@ -17,52 +17,52 @@ const secretChain: Chain = {
 
 // get functions
 async function getCurrentBlock(chain: Chain) {
-  const latestBlocks = await fetch(`${chain.api}/blocks/latest`).then((res) => res.json());
-  return parseInt(latestBlocks["block"]["header"]["height"]);
+  const response = await fetch(`${chain.api}/blocks/latest`).then((res) => res.json());
+  return parseInt(response["block"]["header"]["height"]);
 }
 
 async function getValidators(chain: Chain) {
-  const validators = await fetch(`${chain.api}/validatorsets/${chain.height-30}`).then((res) => res.json()); // -30 to avoid block error
-  return validators;
+  const response = await fetch(`${chain.api}/validatorsets/${chain.height-30}`).then((res) => res.json()); // -30 to avoid block error
+  return response;
 }
 
 async function getMoreValidators(chain: Chain) {
-    const validators = await fetch(`${chain.api}/validatorsets/${chain.height-30}?page=2`).then((res) => res.json());
-    return validators;
+    const response = await fetch(`${chain.api}/validatorsets/${chain.height-30}?page=2`).then((res) => res.json());
+    return response;
 }
 
-// Secret Info
-const secretHeight = await getCurrentBlock(secretChain);
-secretChain.height = secretHeight; // update chain height on api call
-const secretValidators = await getValidators(secretChain);
-var secretJackalRank;
+// Validator Info
+const validatorHeight = await getCurrentBlock(validatorChain);
+validatorChain.height = validatorHeight; // update chain height on api call
+const validators = await getValidators(validatorChain);
+var jackalRank;
 
-// check if there is a page 2...
-var secretMaxValidators;
-if (secretValidators["result"]["total"] == secretValidators["result"]["validators"].length) {
-    secretMaxValidators = secretValidators["result"]["total"];
-    for (let i = 0; i < secretMaxValidators; i++) {
-        if (secretValidators["result"]["validators"][i]["address"] == secretChain.address) {
-            secretJackalRank = i + 1;
+// check if there is a page 2, then iterate accordingly
+var maxValidators;
+if (validators["result"]["total"] == validators["result"]["validators"].length) {
+    maxValidators = validators["result"]["total"];
+    for (let i = 0; i < maxValidators; i++) {
+        if (validators["result"]["validators"][i]["address"] == validatorChain.address) {
+            jackalRank = i + 1;
         }
     }
 } else {
-    const moreValidators = await getMoreValidators(secretChain)
-    secretMaxValidators = secretValidators["result"]["validators"].length + moreValidators["result"]["validators"].length
+    const moreValidators = await getMoreValidators(validatorChain)
+    maxValidators = validators["result"]["validators"].length + moreValidators["result"]["validators"].length
     for (let i = 0; i < moreValidators["result"]["validators"].length; i++) {
-        if (moreValidators["result"]["validators"][i]["address"] == secretChain.address) {
-            secretJackalRank = secretValidators["result"]["validators"].length + i + 1;
+        if (moreValidators["result"]["validators"][i]["address"] == validatorChain.address) {
+            jackalRank = validators["result"]["validators"].length + i + 1;
         }
     }
 }
 ---
-<div class="secret">
+<div>
     <b>{title}</b>
-    <div class="block-height">Current Block Height: {secretHeight}</div>
+    <div class="block-height">Current Block Height: {validatorHeight}</div>
     <div class="max-validators">
-        Number of Validators: {secretMaxValidators}
+        Number of Validators: {maxValidators}
     </div>
-    <div class="rank">Rank: {secretJackalRank}</div>
+    <div class="rank">Rank: {jackalRank}</div>
 </div>
 
 <style>
