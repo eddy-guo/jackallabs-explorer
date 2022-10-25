@@ -1,0 +1,51 @@
+---
+export interface Chain {
+    api: string,
+    address: string,
+    height: any,
+}
+const { api, address } = Astro.props;
+
+// Chain objects
+const secretChain: Chain = {
+  api: `${api}`,
+  address: `${address}`,
+  height: 0,
+}
+
+// get functions
+async function getCurrentBlock(chain: Chain) {
+  const latestBlocks = await fetch(`${chain.api}/blocks/latest`).then((res) => res.json());
+  return parseInt(latestBlocks["block"]["header"]["height"]);
+}
+
+async function getValidators(chain: Chain) {
+  const validators = await fetch(`${chain.api}/validatorsets/${chain.height-30}`).then((res) => res.json()); // -30 to avoid block error
+  return validators;
+}
+
+// Secret Info
+const secretHeight = await getCurrentBlock(secretChain);
+secretChain.height = secretHeight; // update chain height on api call
+const secretValidators = await getValidators(secretChain);
+const secretMaxValidators = secretValidators["result"]["total"];
+var secretJackalRank;
+
+// find rank by iterating through all validators
+for (let i = 0; i < secretMaxValidators; i++) {
+  if (secretValidators["result"]["validators"][i]["address"] == secretChain.address) {
+    secretJackalRank = i + 1;
+  }
+}
+---
+<div class="secret">
+    <b>Secret</b>
+    <div class="block-height">Current Block Height: {secretHeight}</div>
+    <div class="max-validators">
+        Number of Validators: {secretMaxValidators}
+    </div>
+    <div class="rank">Rank: {secretJackalRank}</div>
+</div>
+
+<style>
+</style>

@@ -1,56 +1,13 @@
 ---
 import Layout from "../layouts/Layout.astro";
-
-// Chain Interface 
-interface Chain {
-  api: string,
-  address: string,
-  height: number,
-}
-
-// Chain objects
-const secretChain: Chain = {
-  api: "https://api.scrt.network",
-  address: "secretvalcons1qz6dgmf0rgk8p08wznlnmqe7hnm4qydftvaajj",
-  height: 0,
-}
-
-// get functions
-async function getCurrentBlock(chain: Chain) {
-  const latestBlocks = await fetch(`${chain.api}/blocks/latest`).then((res) => res.json());
-  return parseInt(latestBlocks["block"]["header"]["height"]);
-}
-
-async function getValidators(chain: Chain) {
-  const validators = await fetch(`${chain.api}/validatorsets/${chain.height-30}`).then((res) => res.json()); // -30 to avoid block error
-  return validators;
-}
-
-// Secret Info
-const secretHeight = await getCurrentBlock(secretChain);
-secretChain.height = secretHeight; // update chain height on api call
-const secretValidators = await getValidators(secretChain);
-const secretMaxValidators = secretValidators["result"]["validators"].length;
-var secretJackalRank;
-
-// find rank by iterating through all validators
-for (let i = 0; i < secretMaxValidators; i++) {
-  if (secretValidators["result"]["validators"][i]["address"] == secretChain.address) {
-    secretJackalRank = i + 1;
-  }
-}
+import Chain from "../components/chain.astro"
 ---
 
 <Layout title="Jackal Labs Dashboard">
   <main>
-    <div class="secret">
-      <b>Secret</b>
-      <div class="block-height">Current Block Height: {secretHeight}</div>
-      <div class="max-validators">
-        Number of Validators: {secretMaxValidators}
-      </div>
-      <div class="rank">Rank: {secretJackalRank}</div>
-    </div>
+    <Chain
+    api="https://api.scrt.network/"
+    address="secretvalcons1qz6dgmf0rgk8p08wznlnmqe7hnm4qydftvaajj"/>
   </main>
 </Layout>
 
