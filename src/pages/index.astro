@@ -1,49 +1,35 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
+// jackal gLobal constants
+const secretAddress = "secretvalcons1qz6dgmf0rgk8p08wznlnmqe7hnm4qydftvaajj",
+evmosAddress = "evmos1fpjf8aywxg9qxexfwu9lanlgw58f5fhqyj79xt",
+akashAddress = "akash1mryswr20mxltwhlqulsk0hnscmmxw32tad7yxx",
+kujiraAddress = "kujira1uf9knclap4a0vrqn8dj726anyhst7l02nymu3j";
+
 // SECRET
-const secretLatestBlock = await fetch(
-  "https://api.scrt.network/blocks/latest"
-).then((res) => res.json());
-const secretCurrBlock = parseInt(
-  secretLatestBlock["block"]["header"]["height"]
-);
-const secretStakingParams = await fetch(
-  "https://api.scrt.network/cosmos/staking/v1beta1/params"
-).then((res) => res.json());
-const secretMaxValidators = secretStakingParams["params"]["max_validators"];
+const secretLatestBlock = await fetch("https://api.scrt.network/blocks/latest").then((res) => res.json()),
+secretCurrBlock = parseInt(secretLatestBlock["block"]["header"]["height"]),
+secretStakingParams = await fetch("https://api.scrt.network/cosmos/staking/v1beta1/params").then((res) => res.json()),
+secretMaxValidators = secretStakingParams["params"]["max_validators"];
 
 // EVMOS
-const evmosLatestBlock = await fetch(
-  "https://evmos-api.polkachu.com/blocks/latest"
-).then((res) => res.json());
-const evmosCurrBlock = parseInt(evmosLatestBlock["block"]["header"]["height"]);
-const evmosStakingParams = await fetch(
-  "https://evmos-api.polkachu.com/cosmos/staking/v1beta1/params"
-).then((res) => res.json());
-const evmosMaxValidators = evmosStakingParams["params"]["max_validators"];
+const evmosLatestBlock = await fetch("https://evmos-api.polkachu.com/blocks/latest").then((res) => res.json()),
+evmosCurrBlock = parseInt(evmosLatestBlock["block"]["header"]["height"]),
+evmosStakingParams = await fetch("https://evmos-api.polkachu.com/cosmos/staking/v1beta1/params").then((res) => res.json()),
+evmosMaxValidators = evmosStakingParams["params"]["max_validators"];
 
 // AKASH
-const akashLatestBlock = await fetch(
-  "https://api-akash-ia.cosmosia.notional.ventures/blocks/latest"
-).then((res) => res.json());
-const akashCurrBlock = parseInt(akashLatestBlock["block"]["header"]["height"]);
-const akashStakingParams = await fetch(
-  "https://api-akash-ia.cosmosia.notional.ventures/cosmos/staking/v1beta1/params"
-).then((res) => res.json());
-const akashMaxValidators = akashStakingParams["params"]["max_validators"];
+const akashLatestBlock = await fetch("https://api-akash-ia.cosmosia.notional.ventures/blocks/latest").then((res) => res.json()),
+akashCurrBlock = parseInt(akashLatestBlock["block"]["header"]["height"]),
+akashStakingParams = await fetch("https://api-akash-ia.cosmosia.notional.ventures/cosmos/staking/v1beta1/params").then((res) => res.json()),
+akashMaxValidators = akashStakingParams["params"]["max_validators"];
 
 // KUJIRA
-const kujiraLatestBlock = await fetch(
-  "https://kujira-api.polkachu.com/blocks/latest"
-).then((res) => res.json());
-const kujiraCurrBlock = parseInt(
-  kujiraLatestBlock["block"]["header"]["height"]
-);
-const kujiraStakingParams = await fetch(
-  "https://kujira-api.polkachu.com/cosmos/staking/v1beta1/params"
-).then((res) => res.json());
-const kujiraMaxValidators = kujiraStakingParams["params"]["max_validators"];
+const kujiraLatestBlock = await fetch("https://kujira-api.polkachu.com/blocks/latest").then((res) => res.json()),
+kujiraCurrBlock = parseInt(kujiraLatestBlock["block"]["header"]["height"]),
+kujiraStakingParams = await fetch("https://kujira-api.polkachu.com/cosmos/staking/v1beta1/params").then((res) => res.json()),
+kujiraMaxValidators = kujiraStakingParams["params"]["max_validators"];
 ---
 
 <Layout title="Jackal Labs Dashboard">
@@ -86,7 +72,7 @@ const kujiraMaxValidators = kujiraStakingParams["params"]["max_validators"];
     text-align: center;
   }
 
-  .block-height {
-    padding-top: 10px;
+  .max-validators {
+    padding-bottom: 10px;
   }
 </style>
