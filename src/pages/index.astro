@@ -14,30 +14,12 @@ secretValidators = await fetch(`https://api.scrt.network/validatorsets/${secretC
 secretMaxValidators = secretValidators["result"]["validators"].length;
 var jackalSecretRank;
 
-// 
+// find rank by iterating through all validators
 for (let i = 0; i < secretValidators["result"]["validators"].length; i++) {
   if (secretValidators["result"]["validators"][i]["address"] == secretAddress) {
     jackalSecretRank = i + 1;
   }
 }
-
-// // EVMOS
-// const evmosLatestBlock = await fetch("https://evmos-api.polkachu.com/blocks/latest").then((res) => res.json()),
-// evmosCurrBlock = parseInt(evmosLatestBlock["block"]["header"]["height"]),
-// evmosStakingParams = await fetch("https://evmos-api.polkachu.com/cosmos/staking/v1beta1/params").then((res) => res.json()),
-// evmosMaxValidators = evmosStakingParams["params"]["max_validators"];
-
-// // AKASH
-// const akashLatestBlock = await fetch("https://api-akash-ia.cosmosia.notional.ventures/blocks/latest").then((res) => res.json()),
-// akashCurrBlock = parseInt(akashLatestBlock["block"]["header"]["height"]),
-// akashStakingParams = await fetch("https://api-akash-ia.cosmosia.notional.ventures/cosmos/staking/v1beta1/params").then((res) => res.json()),
-// akashMaxValidators = akashStakingParams["params"]["max_validators"];
-
-// // KUJIRA
-// const kujiraLatestBlock = await fetch("https://kujira-api.polkachu.com/blocks/latest").then((res) => res.json()),
-// kujiraCurrBlock = parseInt(kujiraLatestBlock["block"]["header"]["height"]),
-// kujiraStakingParams = await fetch("https://kujira-api.polkachu.com/cosmos/staking/v1beta1/params").then((res) => res.json()),
-// kujiraMaxValidators = kujiraStakingParams["params"]["max_validators"];
 ---
 
 <Layout title="Jackal Labs Dashboard">
@@ -50,27 +32,6 @@ for (let i = 0; i < secretValidators["result"]["validators"].length; i++) {
       </div>
       <div class="rank">Rank: {jackalSecretRank}</div>
     </div>
-    <!-- <div class="evmos">
-      <b>Evmos</b>
-      <div class="block-height">Current Block Height: {evmosCurrBlock}</div>
-      <div class="max-validators">
-        Number of Validators: {evmosMaxValidators}
-      </div>
-    </div>
-    <div class="akash">
-      <b>Akash</b>
-      <div class="block-height">Current Block Height: {akashCurrBlock}</div>
-      <div class="max-validators">
-        Number of Validators: {akashMaxValidators}
-      </div>
-    </div>
-    <div class="kujira">
-      <b>Kujira</b>
-      <div class="block-height">Current Block Height: {kujiraCurrBlock}</div>
-      <div class="max-validators">
-        Number of Validators: {kujiraMaxValidators}
-      </div>
-    </div> -->
   </main>
 </Layout>
 
