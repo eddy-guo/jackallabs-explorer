@@ -26,25 +26,34 @@ async function getValidators(chain: Chain) {
   return validators;
 }
 
+async function getMoreValidators(chain: Chain) {
+    const validators = await fetch(`${chain.api}/validatorsets/${chain.height-30}?page=2`).then((res) => res.json());
+    return validators;
+}
+
 // Secret Info
 const secretHeight = await getCurrentBlock(secretChain);
 secretChain.height = secretHeight; // update chain height on api call
 const secretValidators = await getValidators(secretChain);
+var secretJackalRank;
 
 // check if there is a page 2...
 var secretMaxValidators;
 if (secretValidators["result"]["total"] == secretValidators["result"]["validators"].length) {
     secretMaxValidators = secretValidators["result"]["total"];
+    for (let i = 0; i < secretMaxValidators; i++) {
+        if (secretValidators["result"]["validators"][i]["address"] == secretChain.address) {
+            secretJackalRank = i + 1;
+        }
+    }
 } else {
-    secretMaxValidators = secretValidators["result"]["validators"].length
-}
-
-// find rank by iterating through all validators
-var secretJackalRank;
-for (let i = 0; i < secretMaxValidators; i++) {
-    if (secretValidators["result"]["validators"][i]["address"] == secretChain.address) {
-    secretJackalRank = i + 1;
-  }
+    const moreValidators = await getMoreValidators(secretChain)
+    secretMaxValidators = secretValidators["result"]["validators"].length + moreValidators["result"]["validators"].length
+    for (let i = 0; i < moreValidators["result"]["validators"].length; i++) {
+        if (moreValidators["result"]["validators"][i]["address"] == secretChain.address) {
+            secretJackalRank = secretValidators["result"]["validators"].length + i + 1;
+        }
+    }
 }
 ---
 <div class="secret">
