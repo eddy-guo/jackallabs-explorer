@@ -1,18 +1,31 @@
 ---
 import Layout from "../layouts/Layout.astro";
 
-// Jackal Validator Addresses
-const secretAddress = "secretvalcons1qz6dgmf0rgk8p08wznlnmqe7hnm4qydftvaajj",
-evmosAddress = "evmos1fpjf8aywxg9qxexfwu9lanlgw58f5fhqyj79xt",
-akashAddress = "akash1mryswr20mxltwhlqulsk0hnscmmxw32tad7yxx",
-kujiraAddress = "kujira1uf9knclap4a0vrqn8dj726anyhst7l02nymu3j";
-
-// logic for adaptable Chain object
 interface Chain {
   api: string,
   address: string,
-  latestBlock: number,
 }
+
+const secretChain: Chain = {
+  api: "https://api.scrt.network",
+  address: "secretvalcons1qz6dgmf0rgk8p08wznlnmqe7hnm4qydftvaajj",
+}
+
+const evmosChain: Chain = {
+  api: "https://evmos-api.polkachu.com",
+  address: "evmos1fpjf8aywxg9qxexfwu9lanlgw58f5fhqyj79xt",
+}
+
+const akashChain: Chain = {
+  api: "https://api-akash-ia.cosmosia.notional.ventures",
+  address: "akash1mryswr20mxltwhlqulsk0hnscmmxw32tad7yxx",
+}
+
+const kujiraChain: Chain = {
+  api: "https://kujira-api.polkachu.com",
+  address: "kujira1uf9knclap4a0vrqn8dj726anyhst7l02nymu3j",
+}
+
 
 async function getCurrentBlock(chain: Chain) {
   const latestBlocks = await fetch(`${chain.api}/blocks/latest`).then((res) => res.json());
@@ -20,14 +33,14 @@ async function getCurrentBlock(chain: Chain) {
 }
 
 // Secret Info
-const secretCurrBlock = await getCurrentBlock({api: "https://api.scrt.network", address: "", latestBlock: 0}),
+const secretCurrBlock = await getCurrentBlock({api: "https://api.scrt.network", address: ""}),
 secretValidators = await fetch(`https://api.scrt.network/validatorsets/${secretCurrBlock-30}`).then((res) => res.json()),
 secretMaxValidators = secretValidators["result"]["validators"].length;
 var jackalSecretRank;
 
 // find rank by iterating through all validators
 for (let i = 0; i < secretValidators["result"]["validators"].length; i++) {
-  if (secretValidators["result"]["validators"][i]["address"] == secretAddress) {
+  if (secretValidators["result"]["validators"][i]["address"] == secretChain.address) {
     jackalSecretRank = i + 1;
   }
 }
