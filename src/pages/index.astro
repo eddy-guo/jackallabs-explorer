@@ -15,13 +15,14 @@ const secretChain: Chain = {
   height: 0,
 }
 
+// get functions
 async function getCurrentBlock(chain: Chain) {
   const latestBlocks = await fetch(`${chain.api}/blocks/latest`).then((res) => res.json());
   return parseInt(latestBlocks["block"]["header"]["height"]);
 }
 
 async function getValidators(chain: Chain) {
-  const validators = await fetch(`${chain.api}/validatorsets/${chain.height-30}`).then((res) => res.json());
+  const validators = await fetch(`${chain.api}/validatorsets/${chain.height-30}`).then((res) => res.json()); // -30 to avoid block error
   return validators;
 }
 
