@@ -11,25 +11,33 @@ kujiraAddress = "kujira1uf9knclap4a0vrqn8dj726anyhst7l02nymu3j";
 const secretLatestBlock = await fetch("https://api.scrt.network/blocks/latest").then((res) => res.json()),
 secretCurrBlock = parseInt(secretLatestBlock["block"]["header"]["height"]),
 secretStakingParams = await fetch("https://api.scrt.network/cosmos/staking/v1beta1/params").then((res) => res.json()),
-secretMaxValidators = secretStakingParams["params"]["max_validators"];
+secretMaxValidators = secretStakingParams["params"]["max_validators"],
+secretValidators = await fetch(`https://api.scrt.network/validatorsets/${secretCurrBlock-10}`).then((res) => res.json());
+var jackalSecretRank;
 
-// EVMOS
-const evmosLatestBlock = await fetch("https://evmos-api.polkachu.com/blocks/latest").then((res) => res.json()),
-evmosCurrBlock = parseInt(evmosLatestBlock["block"]["header"]["height"]),
-evmosStakingParams = await fetch("https://evmos-api.polkachu.com/cosmos/staking/v1beta1/params").then((res) => res.json()),
-evmosMaxValidators = evmosStakingParams["params"]["max_validators"];
+for (let i = 0; i < secretValidators["result"]["validators"].length; i++) {
+  if (secretValidators["result"]["validators"][i]["address"] == secretAddress) {
+    jackalSecretRank = i + 1;
+  }
+}
 
-// AKASH
-const akashLatestBlock = await fetch("https://api-akash-ia.cosmosia.notional.ventures/blocks/latest").then((res) => res.json()),
-akashCurrBlock = parseInt(akashLatestBlock["block"]["header"]["height"]),
-akashStakingParams = await fetch("https://api-akash-ia.cosmosia.notional.ventures/cosmos/staking/v1beta1/params").then((res) => res.json()),
-akashMaxValidators = akashStakingParams["params"]["max_validators"];
+// // EVMOS
+// const evmosLatestBlock = await fetch("https://evmos-api.polkachu.com/blocks/latest").then((res) => res.json()),
+// evmosCurrBlock = parseInt(evmosLatestBlock["block"]["header"]["height"]),
+// evmosStakingParams = await fetch("https://evmos-api.polkachu.com/cosmos/staking/v1beta1/params").then((res) => res.json()),
+// evmosMaxValidators = evmosStakingParams["params"]["max_validators"];
 
-// KUJIRA
-const kujiraLatestBlock = await fetch("https://kujira-api.polkachu.com/blocks/latest").then((res) => res.json()),
-kujiraCurrBlock = parseInt(kujiraLatestBlock["block"]["header"]["height"]),
-kujiraStakingParams = await fetch("https://kujira-api.polkachu.com/cosmos/staking/v1beta1/params").then((res) => res.json()),
-kujiraMaxValidators = kujiraStakingParams["params"]["max_validators"];
+// // AKASH
+// const akashLatestBlock = await fetch("https://api-akash-ia.cosmosia.notional.ventures/blocks/latest").then((res) => res.json()),
+// akashCurrBlock = parseInt(akashLatestBlock["block"]["header"]["height"]),
+// akashStakingParams = await fetch("https://api-akash-ia.cosmosia.notional.ventures/cosmos/staking/v1beta1/params").then((res) => res.json()),
+// akashMaxValidators = akashStakingParams["params"]["max_validators"];
+
+// // KUJIRA
+// const kujiraLatestBlock = await fetch("https://kujira-api.polkachu.com/blocks/latest").then((res) => res.json()),
+// kujiraCurrBlock = parseInt(kujiraLatestBlock["block"]["header"]["height"]),
+// kujiraStakingParams = await fetch("https://kujira-api.polkachu.com/cosmos/staking/v1beta1/params").then((res) => res.json()),
+// kujiraMaxValidators = kujiraStakingParams["params"]["max_validators"];
 ---
 
 <Layout title="Jackal Labs Dashboard">
@@ -40,8 +48,9 @@ kujiraMaxValidators = kujiraStakingParams["params"]["max_validators"];
       <div class="max-validators">
         Number of Validators: {secretMaxValidators}
       </div>
+      <div class="rank">Rank: {jackalSecretRank}</div>
     </div>
-    <div class="evmos">
+    <!-- <div class="evmos">
       <b>Evmos</b>
       <div class="block-height">Current Block Height: {evmosCurrBlock}</div>
       <div class="max-validators">
@@ -61,7 +70,7 @@ kujiraMaxValidators = kujiraStakingParams["params"]["max_validators"];
       <div class="max-validators">
         Number of Validators: {kujiraMaxValidators}
       </div>
-    </div>
+    </div> -->
   </main>
 </Layout>
 
@@ -72,7 +81,7 @@ kujiraMaxValidators = kujiraStakingParams["params"]["max_validators"];
     text-align: center;
   }
 
-  .max-validators {
+  .rank {
     padding-bottom: 10px;
   }
 </style>
