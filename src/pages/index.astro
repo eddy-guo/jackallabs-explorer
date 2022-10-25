@@ -10,13 +10,11 @@ kujiraAddress = "kujira1uf9knclap4a0vrqn8dj726anyhst7l02nymu3j";
 // Secret Info
 const secretLatestBlock = await fetch("https://api.scrt.network/blocks/latest").then((res) => res.json()),
 secretCurrBlock = parseInt(secretLatestBlock["block"]["header"]["height"]),
-secretStakingParams = await fetch("https://api.scrt.network/cosmos/staking/v1beta1/params").then((res) => res.json()),
-secretMaxValidators = secretStakingParams["params"]["max_validators"],
-secretValidators = await fetch(`https://api.scrt.network/validatorsets/${secretCurrBlock-10}`).then((res) => res.json());
+secretValidators = await fetch(`https://api.scrt.network/validatorsets/${secretCurrBlock-30}`).then((res) => res.json()),
+secretMaxValidators = secretValidators["result"]["validators"].length;
 var jackalSecretRank;
 
-console.log(secretValidators["result"]["validators"])
-
+// 
 for (let i = 0; i < secretValidators["result"]["validators"].length; i++) {
   if (secretValidators["result"]["validators"][i]["address"] == secretAddress) {
     jackalSecretRank = i + 1;
