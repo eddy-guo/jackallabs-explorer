@@ -1,34 +1,34 @@
 ---
 export interface Chain {
-    title: string,
-    api: string,
-    address: string,
-    height: any,
+  title: string;
+  api: string;
+  address: string;
+  height: any;
 }
 const { title, api, address } = Astro.props;
 
 // Chain object
 const validatorChain: Chain = {
-    title: `${title}`,
-    api: `${api}`,
-    address: `${address}`,
-    height: 0,
-}
+  title: `${title}`,
+  api: `${api}`,
+  address: `${address}`,
+  height: 0,
+};
 
 // get functions
 async function getCurrentBlock(chain: Chain) {
-  const response = await fetch(`${chain.api}/blocks/latest`).then((res) => res.json());
+  const response = await fetch(`${chain.api}/blocks/latest`).then((res) =>res.json());
   return parseInt(response["block"]["header"]["height"]);
 }
 
 async function getValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/${chain.height-1000}`).then((res) => res.json()); // -30 to avoid block error
+  const response = await fetch(`${chain.api}/validatorsets/${chain.height - 1000}`).then((res) => res.json()); // -30 to avoid block error
   return response;
 }
 
 async function getMoreValidators(chain: Chain) {
-    const response = await fetch(`${chain.api}/validatorsets/${chain.height-1000}?page=2`).then((res) => res.json());
-    return response;
+  const response = await fetch(`${chain.api}/validatorsets/${chain.height - 1000}?page=2`).then((res) => res.json());
+  return response;
 }
 
 // Validator Info
@@ -40,28 +40,35 @@ var jackalRank;
 
 // check if there is a page 2, then iterate accordingly
 if (validators["result"]["total"] == validators["result"]["validators"].length) {
-    for (let i = 0; i < maxValidators; i++) {
-        if (validators["result"]["validators"][i]["address"] == validatorChain.address) {
-            jackalRank = i + 1;
-        }
+  for (let i = 0; i < maxValidators; i++) {
+    if (validators["result"]["validators"][i]["address"] == validatorChain.address) {
+      jackalRank = i + 1;
     }
+  }
 } else {
-    const moreValidators = await getMoreValidators(validatorChain)
-    for (let i = 0; i < moreValidators["result"]["validators"].length; i++) {
-        if (moreValidators["result"]["validators"][i]["address"] == validatorChain.address) {
-            jackalRank = validators["result"]["validators"].length + i + 1;
-        }
+  const moreValidators = await getMoreValidators(validatorChain);
+  for (let i = 0; i < moreValidators["result"]["validators"].length; i++) {
+    if (moreValidators["result"]["validators"][i]["address"] == validatorChain.address) {
+      jackalRank = validators["result"]["validators"].length + i + 1;
     }
+  }
 }
 ---
-<div>
-    <b>{title}</b>
-    <div class="block-height">Current Block Height: {validatorHeight}</div>
-    <div class="max-validators">
-        Number of Validators: {maxValidators}
-    </div>
-    <div class="rank">Rank: {jackalRank}</div>
+
+<div class="chain">
+  <b>{title}</b>
+  <div class="block-height">Current Block Height: {validatorHeight}</div>
+  <div class="max-validators">Number of Validators: {maxValidators}</div>
+  <div class="rank">Rank: {jackalRank}</div>
 </div>
 
 <style>
+  .chain {
+    padding: 20px 20px;
+    flex-grow: 1;
+    text-align: left;
+    border-top: 1px solid #D3D3D3;
+    border-right: 1px solid #D3D3D3;
+    border-bottom: 1px solid #D3D3D3;
+  }
 </style>
