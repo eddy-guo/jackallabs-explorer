@@ -22,12 +22,12 @@ async function getCurrentBlock(chain: Chain) {
 }
 
 async function getValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/${chain.height-30}`).then((res) => res.json()); // -30 to avoid block error
+  const response = await fetch(`${chain.api}/validatorsets/${chain.height-1000}`).then((res) => res.json()); // -30 to avoid block error
   return response;
 }
 
 async function getMoreValidators(chain: Chain) {
-    const response = await fetch(`${chain.api}/validatorsets/${chain.height-30}?page=2`).then((res) => res.json());
+    const response = await fetch(`${chain.api}/validatorsets/${chain.height-1000}?page=2`).then((res) => res.json());
     return response;
 }
 
@@ -35,12 +35,11 @@ async function getMoreValidators(chain: Chain) {
 const validatorHeight = await getCurrentBlock(validatorChain);
 validatorChain.height = validatorHeight; // update chain height on api call
 const validators = await getValidators(validatorChain);
+var maxValidators = validators["result"]["total"];
 var jackalRank;
 
 // check if there is a page 2, then iterate accordingly
-var maxValidators;
 if (validators["result"]["total"] == validators["result"]["validators"].length) {
-    maxValidators = validators["result"]["total"];
     for (let i = 0; i < maxValidators; i++) {
         if (validators["result"]["validators"][i]["address"] == validatorChain.address) {
             jackalRank = i + 1;
@@ -48,7 +47,6 @@ if (validators["result"]["total"] == validators["result"]["validators"].length) 
     }
 } else {
     const moreValidators = await getMoreValidators(validatorChain)
-    maxValidators = validators["result"]["validators"].length + moreValidators["result"]["validators"].length
     for (let i = 0; i < moreValidators["result"]["validators"].length; i++) {
         if (moreValidators["result"]["validators"][i]["address"] == validatorChain.address) {
             jackalRank = validators["result"]["validators"].length + i + 1;
