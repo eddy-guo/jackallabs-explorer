@@ -5,7 +5,7 @@ export interface Chain {
   address: string;
   height: any;
 }
-const { title, api, address } = Astro.props;
+const { title, api, address, image } = Astro.props;
 
 // Chain object
 const validatorChain: Chain = {
@@ -60,6 +60,7 @@ if (validators["result"]["total"] == validators["result"]["validators"].length) 
   <div class="block-height">Current Block Height: {validatorHeight}</div>
   <div class="max-validators">Number of Validators: {maxValidators}</div>
   <div class="rank">Rank: {jackalRank}</div>
+  <img src={`/images/${title}.png`} alt={`${title} Icon`}>
 </div>
 
 <style>
