@@ -3,7 +3,6 @@ export interface Chain {
   title: string;
   api: string;
   address: string;
-  height: any;
 }
 const { title, api, address, image } = Astro.props;
 
@@ -12,7 +11,6 @@ const validatorChain: Chain = {
   title: `${title}`,
   api: `${api}`,
   address: `${address}`,
-  height: 0,
 };
 
 // get functions
