@@ -16,24 +16,23 @@ const validatorChain: Chain = {
 };
 
 // get functions
-async function getCurrentBlock(chain: Chain) {
+export async function getCurrentBlock(chain: Chain) {
   const response = await fetch(`${chain.api}/blocks/latest`).then((res) =>res.json());
   return parseInt(response["block"]["header"]["height"]);
 }
 
-async function getValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/${chain.height - 1000}`).then((res) => res.json()); // -30 to avoid block error
+export async function getValidators(chain: Chain) {
+  const response = await fetch(`${chain.api}/validatorsets/latest`).then((res) => res.json());
   return response;
 }
 
 async function getMoreValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/${chain.height - 1000}?page=2`).then((res) => res.json());
+  const response = await fetch(`${chain.api}/validatorsets/latest?page=2`).then((res) => res.json());
   return response;
 }
 
 // Validator Info
 const validatorHeight = await getCurrentBlock(validatorChain);
-validatorChain.height = validatorHeight; // update chain height on api call
 const validators = await getValidators(validatorChain);
 var maxValidators = validators["result"]["total"];
 var jackalRank;
