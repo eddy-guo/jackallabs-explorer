@@ -1,0 +1,24 @@
+---
+import { Chain, getCurrentBlock, getValidators } from "../components/chain.astro";
+
+const jackalChain: Chain = {
+    title: "jackal",
+    api: "https://api.jackalprotocol.com",
+    address: "",
+}
+
+const jackalHeight = await getCurrentBlock(jackalChain);
+const jackalValidators = await getValidators(jackalChain);
+var maxValidators = jackalValidators["result"]["total"];
+var temp = ""
+
+for (let i = 0; i < maxValidators; i++) {
+  temp += (`${i}: ` + jackalValidators["result"]["validators"][i]["address"] + "\n")
+}
+
+---
+
+<p>{temp}</p>
+
+<style>
+</style>

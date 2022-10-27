@@ -1,6 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Chain from "../components/chain.astro";
+import Validators from "../components/validators.astro";
 ---
 
 <Layout title="Jackal Labs Explorer">
@@ -14,7 +15,7 @@ import Chain from "../components/chain.astro";
     </p>
   </div>
   <main>
-    <div class="chain-validator-title">
+    <div class="title">
       <h3>Jackal as a Cosmos Validator</h3>
       <p>Who we validate for on the Cosmos Network &#128526</p>
     </div>
@@ -35,6 +36,11 @@ import Chain from "../components/chain.astro";
         address="akashvalcons1au2nql99wn2k27qt8fzlj9anzksj22typhcywv"
       />
     </div>
+    <div class="title">
+      <h3>Staking with Jackal</h3>
+      <p>Check out our validators!</p>
+    </div>
+    <Validators />
   </main>
 </Layout>
 
@@ -48,7 +54,7 @@ import Chain from "../components/chain.astro";
   main {
     padding: 0;
   }
-  .chain-validator-title {
+  .title {
     padding: 20px 20px;
   }
   .chain-validator {
