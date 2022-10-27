@@ -10,15 +10,24 @@ const jackalChain: Chain = {
 const jackalHeight = await getCurrentBlock(jackalChain);
 const jackalValidators = await getValidators(jackalChain);
 var maxValidators = jackalValidators["result"]["total"];
-var temp = ""
+var validatorList = []
 
 for (let i = 0; i < maxValidators; i++) {
-  temp += (`${i}: ` + jackalValidators["result"]["validators"][i]["address"] + "\n")
+  validatorList.push(`${i+1}: ` + jackalValidators["result"]["validators"][i]["address"])
 }
 
 ---
-
-<p>{temp}</p>
+<div class="validators">
+  <p>Number of validators: {maxValidators}</p>
+  <ul>
+    {validatorList.map((item) => (
+      <li>{item}</li>
+    ))}
+  </ul>
+</div>
 
 <style>
+  .validators {
+    background: white;
+  }
 </style>
