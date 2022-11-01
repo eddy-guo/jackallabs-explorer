@@ -13,7 +13,7 @@ const validatorChain: Chain = {
   address: `${address}`,
 };
 
-// get functions
+// get functions (might need to add err catch in functions)
 export async function getCurrentBlock(chain: Chain) {
   const response = await fetch(`${chain.api}/blocks/latest`).then((res) =>res.json());
   return parseInt(response["block"]["header"]["height"]);
