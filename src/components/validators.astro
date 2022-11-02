@@ -19,6 +19,15 @@ async function getValidatorsNew(chain: Chain) {
   return response;
 }
 
+// if json in str is printed, good - if error 500, bad
+async function getValidatorsText(chain: Chain) {
+  const response = await fetch(
+    `${chain.api}/cosmos/staking/v1beta1/validators?status=BOND_STATUS_BONDED`
+  ).then((res) => res.text()).then(text => console.log(text));
+  return response;
+}
+var textversion = await getValidatorsText(jackalChain)
+
 const jackalHeight = await getCurrentBlock(jackalChain);
 var jackalValidators = await getValidatorsNew(jackalChain);
 var maxValidators = jackalValidators["pagination"]["total"];
@@ -37,19 +46,21 @@ for (let i = 0; i < maxValidators; i++) {
       <th>Rank</th>
       <th>Validator Name</th>
       <th>Validator Address</th>
-      <th>Voting Power</th>
+      <th class="right-text">Voting Power</th>
+      <th class="right-text">Commission Rate</th>
     </tr>
     {
       jackalValidators["validators"].map((value: any, index: any) => (
         <tr>
-          <td>? (need to order)</td>
+          <td>?</td>
           <td>
             <a href={value["description"]["website"]} target="_blank">
               {value["description"]["moniker"]}
             </a>
           </td>
           <td>{value["operator_address"]}</td>
-          <td class="voting-power">{Math.round(value["tokens"] / 1000000)} JKL</td>
+          <td class="right-text">{Math.round(value["tokens"] / 1000000)} JKL</td>
+          <td class="right-text">{value["commission"]["commission_rates"]["rate"] * 100}%</td>
         </tr>
       ))
     }
@@ -72,7 +83,7 @@ for (let i = 0; i < maxValidators; i++) {
     padding: 10px 20px;
     border-bottom: 1px solid #d3d3d3;
   }
-  .voting-power {
+  .right-text {
     text-align: right;
   }
   a, a:visited {
