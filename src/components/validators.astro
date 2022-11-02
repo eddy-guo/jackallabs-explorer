@@ -26,7 +26,8 @@ async function getValidatorsNew(chain: Chain) {
 //   ).then((res) => res.text()).then(text => console.log(text));
 //   return response;
 // }
-// var textversion = await getValidatorsText(jackalChain)
+
+// await getValidatorsText(jackalChain)
 
 const jackalHeight = await getCurrentBlock(jackalChain);
 var jackalValidators = await getValidatorsNew(jackalChain);
@@ -41,12 +42,12 @@ jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - p
 
 <div class="validators">
   <table>
-    <tr>
-      <th>Rank</th>
-      <th>Validator Name</th>
-      <th>Validator Address</th>
-      <th class="right-text">Voting Power</th>
-      <th class="right-text">Commission Rate</th>
+    <tr class="column-title">
+      <th>RANK</th>
+      <th>VALIDATOR NAME</th>
+      <th>VALIDATOR ADDRESS</th>
+      <th class="right-text">VOTING POWER</th>
+      <th class="right-text">COMMISSION RATE</th>
     </tr>
     {
       jackalValidators["validators"].map((value: any, index: any) => (
@@ -69,10 +70,15 @@ jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - p
 <style>
   .validators-header {
     background: white;
+    padding: 10px 20px;
   }
   .validators {
     background: white;
     display: flex;
+  }
+  .column-title {
+    font-family: Courier;
+    font-size: 15px;
   }
   table {
     width: 100%;
