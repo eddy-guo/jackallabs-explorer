@@ -1,31 +1,63 @@
 ---
-import { Chain, getCurrentBlock, getValidators } from "../components/chain.astro";
+import {
+  Chain,
+  getCurrentBlock,
+  getValidators,
+} from "../components/chain.astro";
 
 const jackalChain: Chain = {
-    title: "jackal",
-    api: "https://api.jackalprotocol.com",
-    address: "",
-}
+  title: "jackal",
+  api: "https://api.jackalprotocol.com",
+  address: "",
+};
 
 const jackalHeight = await getCurrentBlock(jackalChain);
 const jackalValidators = await getValidators(jackalChain);
 var maxValidators = jackalValidators["result"]["total"];
-var validatorList = []
+var validatorList = [];
 
 for (let i = 0; i < maxValidators; i++) {
-  validatorList.push(`${i+1}: ` + jackalValidators["result"]["validators"][i]["address"])
+  validatorList.push(jackalValidators["result"]["validators"][i]["address"]);
 }
-
 ---
-<div class="validators">
-  <p>Number of validators: {maxValidators}</p>
-    {validatorList.map((item) => (
-      <div>{item}</div>
-    ))}
+<p>Number of validators: {maxValidators}</p>
+<p>Current Jackal Block Height: {jackalHeight}</p>
+<div class='validators'>
+  <table>
+    <tr>
+      <th>Rank</th>
+      <th>Validator Name</th>
+      <th>Consensus Address</th>
+      <th>Voting Power</th>
+    </tr>
+    {
+      validatorList.map((value, index) => (
+        <tr>
+          <td>{index + 1}</td>
+          <td>Name</td>
+          <td>{value}</td>
+          <td>123 JKL</td>
+        </tr>
+      ))
+    }
+  </table>
 </div>
 
 <style>
-  .validators {
+.validators {
     background: white;
+    display: flex;
+  }
+
+  table {
+    width: 100%;
+    flex-grow: 1;
+    text-align: left;
+    border-spacing: 0px;
+  }
+
+  th, td {
+    padding: 10px 20px;
+    border-bottom: 1px solid #D3D3D3;
   }
 </style>
