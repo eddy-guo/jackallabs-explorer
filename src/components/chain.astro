@@ -53,21 +53,32 @@ if (validators["result"]["total"] == validators["result"]["validators"].length) 
 ---
 
 <div class="chain">
-  <b>{title}</b>
-  <div class="block-height">Current Block Height: {validatorHeight}</div>
-  <div class="max-validators">Number of Validators: {maxValidators}</div>
-  <div class="rank">Rank: {jackalRank}</div>
   <img src={`/images/${title}.png`} alt={`${title} Icon`}>
+  <div class="chain-text">
+    <b>{title}</b>
+    <div class="block-height">Current Block Height: {validatorHeight}</div>
+    <div class="max-validators">Number of Validators: {maxValidators}</div>
+    <div class="rank">Rank: {jackalRank}</div>
+  </div>
 </div>
 
 <style>
   .chain {
     padding: 20px 20px;
+    display: flex;
     flex-grow: 1;
     text-align: left;
+    align-items: center;
     border-top: 1px solid #D3D3D3;
     border-right: 1px solid #D3D3D3;
     border-bottom: 1px solid #D3D3D3;
     background-color: white;
+  }
+  .chain-text {
+    padding-left: 20px;
+  }
+  img {
+    height: 100px;
+    width: 100px;
   }
 </style>
