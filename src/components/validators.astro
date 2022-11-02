@@ -34,9 +34,11 @@ var maxValidators = jackalValidators["pagination"]["total"];
 // sort jackalValidators["validators"] by decreasing order
 jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - parseFloat(a.tokens));
 ---
+<div class="validators-header">
+  <p>Number of validators: {maxValidators}</p>
+  <p>Current Jackal Block Height: {jackalHeight}</p>
+</div>
 
-<p>Number of validators: {maxValidators}</p>
-<p>Current Jackal Block Height: {jackalHeight}</p>
 <div class="validators">
   <table>
     <tr>
@@ -65,6 +67,9 @@ jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - p
 </div>
 
 <style>
+  .validators-header {
+    background: white;
+  }
   .validators {
     background: white;
     display: flex;
@@ -83,11 +88,16 @@ jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - p
   .right-text {
     text-align: right;
   }
+  /* might need more specific in the future if links are diff styles */
   a, a:visited {
     text-decoration: none;
     color: black;
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 0.05em;
   }
   a:hover {
-    text-decoration: underline;
+    color: rgb(160, 160, 160);
   }
 </style>
