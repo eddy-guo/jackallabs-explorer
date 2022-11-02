@@ -57,7 +57,7 @@ jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - p
           </td>
           <td>{value["operator_address"]}</td>
           <td class="right-text">{Math.round(value["tokens"] / 1000000).toLocaleString()} JKL</td>
-          <td class="right-text">{value["commission"]["commission_rates"]["rate"] * 100}%</td>
+          <td class="right-text">{(value["commission"]["commission_rates"]["rate"] * 100).toLocaleString()}%</td>
         </tr>
       ))
     }

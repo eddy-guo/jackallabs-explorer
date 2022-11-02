@@ -5,13 +5,22 @@ import Validators from "../components/validators.astro";
 ---
 
 <Layout title="Jackal Labs Explorer">
-  <div class="contact">placeholder for contact information, repo, jackal contact, etc</div>
+  <div class="contact">
+    <ul class="contact-text">
+      <li><a href="https://www.eddyguo.ca/" target="_blank">Contact</a></li>
+      <li><a href="https://github.com/eddy-guo/jackallabs-explorer" target="_blank">Source Code (GitHub)</a></li>
+      <li><a href="https://jackalprotocol.com/" target="_blank">Jackal Website</a></li>
+      <li><a href="https://twitter.com/Jackal_Protocol" target="_blank">Jackal Twitter</a></li>
+      
+    </ul>
+  </div>
   <div class="header">
     <h2>Jackal Labs Explorer</h2>
     <p>
       Tracking everything Jackal &#128058 - Inspired by <a
         href="https://ping.pub/"
-        target="_blank">Ping Dashboard</a>
+        target="_blank">Ping Dashboard</a
+      >
     </p>
   </div>
   <main>
@@ -46,10 +55,40 @@ import Validators from "../components/validators.astro";
 
 <style>
   .contact {
-    background-color: white;
+    background-color: black;
+    color: white;
+    font-size: 15px;
+  }
+  .contact-text {
+    margin: 0;
+    list-style-type: none;
+    text-align: right;
+  }
+  .contact-text > li {
+    display: inline-block;
+    padding-right: 15px;
+  }
+  .contact-text > li > a, .contact-text > li > a:visited {
+    text-decoration: none;
+    color: white;
+  }
+  .contact-text > li > a:hover {
+    text-decoration: underline;
   }
   .header {
     padding: 20px 20px;
+  }
+  .header > p > a, .header > p > a:visited  {
+    font-weight: 600;
+    text-decoration: none;
+    color: rgb(83, 26, 153);
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 0.05em;
+  }
+  .header > p > a:hover {
+    filter: brightness(1.5);
   }
   main {
   }
