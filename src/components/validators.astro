@@ -31,11 +31,8 @@ async function getValidatorsNew(chain: Chain) {
 const jackalHeight = await getCurrentBlock(jackalChain);
 var jackalValidators = await getValidatorsNew(jackalChain);
 var maxValidators = jackalValidators["pagination"]["total"];
-var validatorList = [];
-
-for (let i = 0; i < maxValidators; i++) {
-  validatorList.push(jackalValidators["validators"][i]["operator_address"]);
-}
+// sort jackalValidators["validators"] by decreasing order
+jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - parseFloat(a.tokens));
 ---
 
 <p>Number of validators: {maxValidators}</p>
@@ -52,14 +49,14 @@ for (let i = 0; i < maxValidators; i++) {
     {
       jackalValidators["validators"].map((value: any, index: any) => (
         <tr>
-          <td>?</td>
+          <td>{index + 1}</td>
           <td>
             <a href={value["description"]["website"]} target="_blank">
               {value["description"]["moniker"]}
             </a>
           </td>
           <td>{value["operator_address"]}</td>
-          <td class="right-text">{Math.round(value["tokens"] / 1000000)} JKL</td>
+          <td class="right-text">{Math.round(value["tokens"] / 1000000).toLocaleString()} JKL</td>
           <td class="right-text">{value["commission"]["commission_rates"]["rate"] * 100}%</td>
         </tr>
       ))
