@@ -20,9 +20,10 @@ for (let i = 0; i < maxValidators; i++) {
   validatorList.push(jackalValidators["result"]["validators"][i]["address"]);
 }
 ---
+
 <p>Number of validators: {maxValidators}</p>
 <p>Current Jackal Block Height: {jackalHeight}</p>
-<div class='validators'>
+<div class="validators">
   <table>
     <tr>
       <th>Rank</th>
@@ -44,7 +45,7 @@ for (let i = 0; i < maxValidators; i++) {
 </div>
 
 <style>
-.validators {
+  .validators {
     background: white;
     display: flex;
   }
@@ -56,8 +57,9 @@ for (let i = 0; i < maxValidators; i++) {
     border-spacing: 0px;
   }
 
-  th, td {
+  th,
+  td {
     padding: 10px 20px;
-    border-bottom: 1px solid #D3D3D3;
+    border-bottom: 1px solid #d3d3d3;
   }
 </style>
