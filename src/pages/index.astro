@@ -2,6 +2,7 @@
 import Layout from "../layouts/Layout.astro";
 import Chain from "../components/chain.astro";
 import Validators from "../components/validators.astro";
+import TokenInfo from "../components/tokeninfo.astro";
 ---
 
 <Layout title="Jackal Labs Explorer">
@@ -24,6 +25,11 @@ import Validators from "../components/validators.astro";
     </p>
   </div>
   <main>
+    <div class="title">
+      <h3>Jackal Token Info (JKL)</h3>
+      <p>Price, Volume, Liquidity, Historical Data, etc.</p>
+    </div>
+    <TokenInfo />
     <div class="title">
       <h3>Jackal as a Cosmos Validator</h3>
       <p>Who we validate for on the Cosmos Network &#128526</p>

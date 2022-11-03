@@ -1,0 +1,12 @@
+---
+const priceInfo = await fetch("https://api.osmosis.zone/tokens/v2/price/jkl").then((res) => res.json());
+---
+
+<div class="price">{priceInfo["price"]}</div>
+
+<style>
+  .price {
+    background: white;
+    padding: 20px 20px;
+  }
+</style>
