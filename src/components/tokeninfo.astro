@@ -2,70 +2,76 @@
 const tokenInfo = await fetch(
   "https://api.dexscreener.com/latest/dex/search?q=jkl"
 ).then((res) => res.json());
+
+interface tokenInfo {
+  title: string;
+  time: string;
+}
+
+const five_min: tokenInfo = {
+  title: "5M",
+  time: "m5",
+};
+
+const one_hour: tokenInfo = {
+  title: "1HR",
+  time: "h1",
+};
+
+const six_hour: tokenInfo = {
+  title: "6HR",
+  time: "h6",
+};
+
+const twentyfour_hour: tokenInfo = {
+  title: "24HR",
+  time: "h24",
+};
+
+const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
 ---
 
-<div class="price">
-  <div>
-    <p>Price USD: <b>${tokenInfo["pairs"][0]["priceUsd"]}</b></p>
-    <p>Price: <b>{tokenInfo["pairs"][0]["priceNative"]} OSMO</b></p>
+<div class="token-info">
+  <div class="token-info-component">
+    <p>USD Price: <b>${tokenInfo["pairs"][0]["priceUsd"]}</b></p>
+    <p>Native Price: <b>{tokenInfo["pairs"][0]["priceNative"]} OSMO</b></p>
   </div>
-  <div>
-    <h4>5 M</h4>
-    <div>
-      <p>Transactions</p>
-      <span>Buys: <b>{tokenInfo["pairs"][0]["txns"]["m5"]["buys"]}</b></span>
-      <span>Sells: <b>{tokenInfo["pairs"][0]["txns"]["m5"]["sells"]}</b></span>
-    </div>
-    <div>
-      <p>Volume</p>
-      <span>something</span>
-    </div>
-  </div>
-  <div>
-    <h4>1 HR</h4>
-    <div>
-      <p>Transactions</p>
-      <span>Buys: <b>{tokenInfo["pairs"][0]["txns"]["h1"]["buys"]}</b></span>
-      <span>Sells: <b>{tokenInfo["pairs"][0]["txns"]["h1"]["sells"]}</b></span>
-    </div>
-    <div>
-      <p>Volume</p>
-      <span>something</span>
-    </div>
-  </div>
-  <div>
-    <h4>6 HR</h4>
-    <div>
-      <p>Transactions</p>
-      <span>Buys: <b>{tokenInfo["pairs"][0]["txns"]["h6"]["buys"]}</b></span>
-      <span>Sells: <b>{tokenInfo["pairs"][0]["txns"]["h6"]["sells"]}</b></span>
-    </div>
-    <div>
-      <p>Volume</p>
-      <span>something</span>
-    </div>
-  </div>
-  <div>
-    <h4>24 HR</h4>
-    <div>
-      <p>Transactions</p>
-      <span>Buys: <b>{tokenInfo["pairs"][0]["txns"]["h24"]["buys"]}</b></span>
-      <span>Sells: <b>{tokenInfo["pairs"][0]["txns"]["h24"]["sells"]}</b></span>
-    </div>
-    <div>
-      <p>Volume</p>
-      <span>something</span>
-    </div>
-  </div>
+  {
+    tokenInfoList.map((value: any) => (
+      <div class="token-info-component">
+        <h4>{value.title}</h4>
+        <div>
+          <p>Transactions</p>
+          <span>
+            Buys: <b>{tokenInfo["pairs"][0]["txns"][value.time]["buys"]}</b>
+          </span>
+          <span>
+            Sells: <b>{tokenInfo["pairs"][0]["txns"][value.time]["sells"]}</b>
+          </span>
+        </div>
+        <div>
+          <p>Volume</p>
+          <span>something</span>
+        </div>
+      </div>
+    ))
+  }
 </div>
 
 <style>
-  .price {
-    background: white;
-    padding: 20px 20px;
+  .token-info {
     display: flex;
+    background-color: white;
   }
-  .price > div {
+  .token-info > div {
     flex-grow: 1;
+  }
+  .token-info-component {
+    padding: 20px 20px;
+    /* display: flex; */
+    /* flex-grow: 1; */
+    border-top: 1px solid #d3d3d3;
+    border-right: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
   }
 </style>

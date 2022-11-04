@@ -15,17 +15,23 @@ const validatorChain: Chain = {
 
 // get functions (might need to add err catch in functions)
 export async function getCurrentBlock(chain: Chain) {
-  const response = await fetch(`${chain.api}/blocks/latest`).then((res) =>res.json());
+  const response = await fetch(`${chain.api}/blocks/latest`).then((res) =>
+    res.json()
+  );
   return parseInt(response["block"]["header"]["height"]);
 }
 
 export async function getValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/latest`).then((res) => res.json());
+  const response = await fetch(`${chain.api}/validatorsets/latest`).then(
+    (res) => res.json()
+  );
   return response;
 }
 
 async function getMoreValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/latest?page=2`).then((res) => res.json());
+  const response = await fetch(`${chain.api}/validatorsets/latest?page=2`).then(
+    (res) => res.json()
+  );
   return response;
 }
 
@@ -36,16 +42,23 @@ var maxValidators = validators["result"]["total"];
 var jackalRank;
 
 // check if there is a page 2, then iterate accordingly
-if (validators["result"]["total"] == validators["result"]["validators"].length) {
+if (
+  validators["result"]["total"] == validators["result"]["validators"].length
+) {
   for (let i = 0; i < maxValidators; i++) {
-    if (validators["result"]["validators"][i]["address"] == validatorChain.address) {
+    if (
+      validators["result"]["validators"][i]["address"] == validatorChain.address
+    ) {
       jackalRank = i + 1;
     }
   }
 } else {
   const moreValidators = await getMoreValidators(validatorChain);
   for (let i = 0; i < moreValidators["result"]["validators"].length; i++) {
-    if (moreValidators["result"]["validators"][i]["address"] == validatorChain.address) {
+    if (
+      moreValidators["result"]["validators"][i]["address"] ==
+      validatorChain.address
+    ) {
       jackalRank = validators["result"]["validators"].length + i + 1;
     }
   }
@@ -53,7 +66,7 @@ if (validators["result"]["total"] == validators["result"]["validators"].length) 
 ---
 
 <div class="chain">
-  <img src={`/images/${title}.png`} alt={`${title} Icon`}>
+  <img src={`/images/${title}.png`} alt={`${title} Icon`} />
   <div class="chain-text">
     <b>{title}</b>
     <div class="block-height">Current Block Height: {validatorHeight}</div>
@@ -69,10 +82,9 @@ if (validators["result"]["total"] == validators["result"]["validators"].length) 
     flex-grow: 1;
     text-align: left;
     align-items: center;
-    border-top: 1px solid #D3D3D3;
-    border-right: 1px solid #D3D3D3;
-    border-bottom: 1px solid #D3D3D3;
-    background-color: white;
+    border-top: 1px solid #d3d3d3;
+    border-right: 1px solid #d3d3d3;
+    border-bottom: 1px solid #d3d3d3;
   }
   .chain-text {
     padding-left: 20px;
