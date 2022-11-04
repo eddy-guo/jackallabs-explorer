@@ -69,9 +69,9 @@ if (
   <img src={`/images/${title}.png`} alt={`${title} Icon`} />
   <div class="chain-text">
     <h4>{title}</h4>
-    <div class="rank">Rank: <b>{jackalRank}</b></div>
-    <div class="max-validators">Number of Validators: <b>{maxValidators}</b></div>
-    <div class="block-height">Current Block Height: <b>{validatorHeight}</b></div>
+    <p class="rank">Rank {jackalRank}</p>
+    <p class="max-validators">{maxValidators} Total Validators</p>
+    <p class="block-height">{validatorHeight.toLocaleString()} Blocks Produced</p>
   </div>
 </div>
 
@@ -87,7 +87,13 @@ if (
     border-bottom: 1px solid #d3d3d3;
   }
   .chain-text {
-    padding-left: 20px;
+    padding: 0px 20px;
+  }
+  .chain-text > h4 {
+    font-size: 20px;
+  }
+  .chain-text > p {
+    margin-bottom: 5px;
   }
   img {
     height: 100px;
