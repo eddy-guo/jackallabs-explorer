@@ -40,8 +40,8 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
     tokenInfoList.map((value: any) => (
       <div class="token-info-component">
         <h4>{value.title}</h4>
-        <div>
-          <p>Transactions</p>
+        <div class ="tidbit">
+          <p class="tidbit-title">Transactions</p>
           <span>
             Buys: <b>{tokenInfo["pairs"][0]["txns"][value.time]["buys"]}</b>
           </span>
@@ -49,8 +49,12 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
             Sells: <b>{tokenInfo["pairs"][0]["txns"][value.time]["sells"]}</b>
           </span>
         </div>
-        <div>
-          <p>Volume</p>
+        <div class="tidbit">
+          <p class="tidbit-title">Overall Volume</p>
+          <span>something</span>
+        </div>
+        <div class ="tidbit">
+          <p class="tidbit-title">Price Change</p>
           <span>something</span>
         </div>
       </div>
@@ -73,5 +77,11 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
     border-top: 1px solid #d3d3d3;
     border-right: 1px solid #d3d3d3;
     border-bottom: 1px solid #d3d3d3;
+  }
+  .tidbit {
+    padding-bottom: 10px;
+  }
+  .tidbit-title {
+    text-decoration: underline;
   }
 </style>
