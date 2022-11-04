@@ -58,7 +58,7 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
         </div>
         <div class="tidbit">
           <p class="tidbit-title">Price Change</p>
-          <span class="price-change"><b>{tokenInfo["pairs"][0]["priceChange"][value.time]}%</b></span>
+          <span class="positive"><b>{tokenInfo["pairs"][0]["priceChange"][value.time]}%</b></span>
         </div>
       </div>
     ))
@@ -70,6 +70,7 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
     display: flex;
     background-color: white;
     font-size: 20px;
+    border-left: 1px solid #d3d3d3;
   }
   .token-info > div {
     flex-grow: 1;
@@ -88,7 +89,10 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
   .tidbit-title {
     text-decoration: underline;
   }
-  .price-change {
+  .positive {
     color: #47b000;
+  }
+  .negative {
+    color: red;
   }
 </style>
