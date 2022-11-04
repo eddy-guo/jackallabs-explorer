@@ -32,7 +32,8 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
 ---
 
 <div class="token-info">
-  <div class="token-info-component">
+  <img src="/images/jkl.svg" alt="jkl-logo" class="token-info-component" />
+  <div class="token-info-component price-info">
     <p>USD Price: <b>${tokenInfo["pairs"][0]["priceUsd"]}</b></p>
     <p>Native Price: <b>{tokenInfo["pairs"][0]["priceNative"]} OSMO</b></p>
     <p>Liquidity: <b>${tokenInfo["pairs"][0]["liquidity"]["usd"].toLocaleString()}</b></p>
@@ -82,6 +83,9 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
     border-top: 1px solid #d3d3d3;
     border-right: 1px solid #d3d3d3;
     border-bottom: 1px solid #d3d3d3;
+  }
+  .price-info > p {
+    padding-bottom: 10px;
   }
   .tidbit {
     padding-bottom: 10px;
