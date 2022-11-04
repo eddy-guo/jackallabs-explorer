@@ -32,12 +32,14 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
 ---
 
 <div class="token-info">
-  <img src="/images/jkl.svg" alt="jkl-logo" class="token-info-component" />
-  <div class="token-info-component price-info">
-    <p>USD Price: <b>${tokenInfo["pairs"][0]["priceUsd"]}</b></p>
-    <p>Native Price: <b>{tokenInfo["pairs"][0]["priceNative"]} OSMO</b></p>
-    <p>Liquidity: <b>${tokenInfo["pairs"][0]["liquidity"]["usd"].toLocaleString()}</b></p>
-  </div>
+    <div class="price-info">
+      <img src="/images/jkl.svg" alt="jkl-logo" />
+      <div class="price-info-text">
+        <p>USD Price: <b>${tokenInfo["pairs"][0]["priceUsd"]}</b></p>
+        <p>Native Price: <b>{tokenInfo["pairs"][0]["priceNative"]} OSMO</b></p>
+        <p>Liquidity: <b>${tokenInfo["pairs"][0]["liquidity"]["usd"].toLocaleString()}</b></p>
+      </div>
+    </div>
   {
     tokenInfoList.map((value: any) => (
       <div class="token-info-component">
@@ -70,13 +72,24 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
   .token-info {
     display: flex;
     background-color: white;
-    font-size: 20px;
     border-left: 1px solid #d3d3d3;
   }
   .token-info > div {
     flex-grow: 1;
   }
-  .token-info-component {
+  .price-info {
+    display: flex;
+  }
+  .price-info-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .price-info-text > p {
+    flex-grow: 1;
+    margin-bottom: 10px;
+  }
+  .token-info-component,
+  .price-info {
     padding: 20px 20px;
     /* display: flex; */
     /* flex-grow: 1; */
@@ -84,11 +97,17 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
     border-right: 1px solid #d3d3d3;
     border-bottom: 1px solid #d3d3d3;
   }
-  .price-info > p {
-    padding-bottom: 10px;
+  .token-info-component > h4 {
+    font-size: 20px;
+  }
+  .price-info {
+    display: flex;
+  }
+  img {
+    padding-right: 20px;
   }
   .tidbit {
-    padding-bottom: 10px;
+    margin-bottom: 10px;
   }
   .tidbit-title {
     text-decoration: underline;
