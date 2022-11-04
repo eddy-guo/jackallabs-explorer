@@ -40,7 +40,7 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
     tokenInfoList.map((value: any) => (
       <div class="token-info-component">
         <h4>{value.title}</h4>
-        <div class ="tidbit">
+        <div class="tidbit">
           <p class="tidbit-title">Transactions</p>
           <span>
             Buys: <b>{tokenInfo["pairs"][0]["txns"][value.time]["buys"]}</b>
@@ -51,11 +51,13 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
         </div>
         <div class="tidbit">
           <p class="tidbit-title">Overall Volume</p>
-          <span>something</span>
+          <span>
+            <b>${tokenInfo["pairs"][0]["volume"][value.time].toLocaleString()}</b>
+          </span>
         </div>
-        <div class ="tidbit">
+        <div class="tidbit">
           <p class="tidbit-title">Price Change</p>
-          <span>something</span>
+          <span class="price-change"><b>{tokenInfo["pairs"][0]["priceChange"][value.time]}%</b></span>
         </div>
       </div>
     ))
@@ -66,6 +68,7 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
   .token-info {
     display: flex;
     background-color: white;
+    font-size: 20px;
   }
   .token-info > div {
     flex-grow: 1;
@@ -83,5 +86,8 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
   }
   .tidbit-title {
     text-decoration: underline;
+  }
+  .price-change {
+    color: #47b000;
   }
 </style>
