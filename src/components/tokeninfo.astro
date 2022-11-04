@@ -35,6 +35,7 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
   <div class="token-info-component">
     <p>USD Price: <b>${tokenInfo["pairs"][0]["priceUsd"]}</b></p>
     <p>Native Price: <b>{tokenInfo["pairs"][0]["priceNative"]} OSMO</b></p>
+    <p>Liquidity: <b>${tokenInfo["pairs"][0]["liquidity"]["usd"].toLocaleString()}</b></p>
   </div>
   {
     tokenInfoList.map((value: any) => (
