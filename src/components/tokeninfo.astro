@@ -1,16 +1,71 @@
 ---
-const tokenInfo = await fetch("https://api.dexscreener.com/latest/dex/search?q=jkl").then((res) => res.json());
+const tokenInfo = await fetch(
+  "https://api.dexscreener.com/latest/dex/search?q=jkl"
+).then((res) => res.json());
 ---
 
 <div class="price">
-    <p>Price: {tokenInfo["pairs"][0]["priceUsd"]}</p>
-    <p>Buys in the past 5m: {tokenInfo["pairs"][0]["txns"]["m5"]["buys"]}</p>
-    <p>Sells in the past 5m: {tokenInfo["pairs"][0]["txns"]["m5"]["sells"]}</p>
+  <div>
+    <p>Price USD: <b>${tokenInfo["pairs"][0]["priceUsd"]}</b></p>
+    <p>Price: <b>{tokenInfo["pairs"][0]["priceNative"]} OSMO</b></p>
+  </div>
+  <div>
+    <h4>5 M</h4>
+    <div>
+      <p>Transactions</p>
+      <span>Buys: <b>{tokenInfo["pairs"][0]["txns"]["m5"]["buys"]}</b></span>
+      <span>Sells: <b>{tokenInfo["pairs"][0]["txns"]["m5"]["sells"]}</b></span>
+    </div>
+    <div>
+      <p>Volume</p>
+      <span>something</span>
+    </div>
+  </div>
+  <div>
+    <h4>1 HR</h4>
+    <div>
+      <p>Transactions</p>
+      <span>Buys: <b>{tokenInfo["pairs"][0]["txns"]["h1"]["buys"]}</b></span>
+      <span>Sells: <b>{tokenInfo["pairs"][0]["txns"]["h1"]["sells"]}</b></span>
+    </div>
+    <div>
+      <p>Volume</p>
+      <span>something</span>
+    </div>
+  </div>
+  <div>
+    <h4>6 HR</h4>
+    <div>
+      <p>Transactions</p>
+      <span>Buys: <b>{tokenInfo["pairs"][0]["txns"]["h6"]["buys"]}</b></span>
+      <span>Sells: <b>{tokenInfo["pairs"][0]["txns"]["h6"]["sells"]}</b></span>
+    </div>
+    <div>
+      <p>Volume</p>
+      <span>something</span>
+    </div>
+  </div>
+  <div>
+    <h4>24 HR</h4>
+    <div>
+      <p>Transactions</p>
+      <span>Buys: <b>{tokenInfo["pairs"][0]["txns"]["h24"]["buys"]}</b></span>
+      <span>Sells: <b>{tokenInfo["pairs"][0]["txns"]["h24"]["sells"]}</b></span>
+    </div>
+    <div>
+      <p>Volume</p>
+      <span>something</span>
+    </div>
+  </div>
 </div>
 
 <style>
   .price {
     background: white;
     padding: 20px 20px;
+    display: flex;
+  }
+  .price > div {
+    flex-grow: 1;
   }
 </style>
