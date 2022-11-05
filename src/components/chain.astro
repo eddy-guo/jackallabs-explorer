@@ -15,24 +15,21 @@ const validatorChain: Chain = {
 
 // get functions (might need to add err catch in functions)
 export async function getCurrentBlock(chain: Chain) {
-  const response = await fetch(`${chain.api}/blocks/latest`).then((res) =>
-    res.json()
-  );
-  return parseInt(response["block"]["header"]["height"]);
+  const response = await fetch(`${chain.api}/blocks/latest`);
+  const data = await response.json();
+  return data["block"]["header"]["height"];
 }
 
 export async function getValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/latest`).then(
-    (res) => res.json()
-  );
-  return response;
+  const response = await fetch(`${chain.api}/validatorsets/latest`);
+  const data = await response.json();
+  return data;
 }
 
 async function getMoreValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/latest?page=2`).then(
-    (res) => res.json()
-  );
-  return response;
+  const response = await fetch(`${chain.api}/validatorsets/latest?page=2`);
+  const data = await response.json();
+  return data;
 }
 
 // Validator Info
