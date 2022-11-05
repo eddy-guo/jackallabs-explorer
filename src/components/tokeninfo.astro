@@ -70,7 +70,7 @@ function changePriceColor(num: any) {
         </div>
         <div class="tidbit">
           <p class="tidbit-title">Price Change</p>
-          {changePriceColor(-1)}
+          {changePriceColor(tokenInfo["pairs"][0]["priceChange"][value.time])}
           <span class={price}>
             <b>{tokenInfo["pairs"][0]["priceChange"][value.time]}%</b>
             </span>
