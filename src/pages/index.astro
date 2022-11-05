@@ -3,7 +3,45 @@ import Layout from "../layouts/Layout.astro";
 import Chain from "../components/chain.astro";
 import Validators from "../components/validators.astro";
 import TokenInfo from "../components/tokeninfo.astro";
+import Tests from "../components/tests.astro";
 ---
+<!-- TESTS FOR JSON ISSUE -->
+<Tests
+  name="SECRET 1"
+  api="https://api.scrt.network/blocks/latest"
+/>
+<Tests
+  name="SECRET 2"
+  api="https://api.scrt.network/validatorsets/latest"
+/>
+<Tests
+  name="EVMOS 1"
+  api="https://evmos-api.polkachu.com/blocks/latest"
+/>
+<Tests
+  name="EVMOS 2"
+  api="https://evmos-api.polkachu.com/validatorsets/latest"
+/>
+<Tests
+  name="EVMOS 3"
+  api="https://evmos-api.polkachu.com/validatorsets/latest?page=2"
+/>
+<Tests
+  name="AKASH 1"
+  api="https://api-akash-ia.cosmosia.notional.ventures/blocks/latest"
+/>
+<Tests
+  name="AKASH 2"
+  api="https://api-akash-ia.cosmosia.notional.ventures/validatorsets/latest"
+/>
+<Tests
+  name="DEX 1"
+  api="https://api.dexscreener.com/latest/dex/search?q=jkl"
+/>
+<Tests
+  name="JACKAL 1"
+  api="https://api.jackalprotocol.com/cosmos/staking/v1beta1/validators?status=BOND_STATUS_BONDED"
+/>
 
 <Layout title="Jackal Labs Explorer">
   <div class="contact">

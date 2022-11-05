@@ -1,0 +1,22 @@
+---
+export interface Tests {
+  name: string;
+  api: string;
+}
+const { name, api } = Astro.props;
+
+// API TEST
+async function checkApi() {
+  const response = await fetch(`${api}`).then((res) => res.text());
+  return response;
+}
+const res = await checkApi();
+if (res.charAt(0) == "{") {
+  console.log(`${name} GOOD`);
+} else if (res.charAt(0) == "<") {
+  console.log(`${name} BAD`);
+  console.log(res)
+}
+---
+
+<style></style>

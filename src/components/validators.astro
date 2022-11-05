@@ -19,20 +19,6 @@ async function getValidatorsNew(chain: Chain) {
   return response;
 }
 
-// JACKAL API TEST
-async function checkApi(chain: Chain) {
-  const response = await fetch(
-    `${chain.api}/cosmos/staking/v1beta1/validators?status=BOND_STATUS_BONDED`
-  ).then((res) => res.text());
-  return response;
-}
-const temp = await checkApi(jackalChain)
-if (temp.charAt(0) == "{") {
-  console.log("JACKAL GOOD")
-} else if (temp.charAt(0) == "<") {
-  console.log("JACKAL BAD")
-}
-
 const jackalHeight = await getCurrentBlock(jackalChain);
 var jackalValidators = await getValidatorsNew(jackalChain);
 var maxValidators = jackalValidators["pagination"]["total"];
