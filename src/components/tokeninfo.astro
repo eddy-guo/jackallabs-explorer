@@ -29,6 +29,15 @@ const twentyfour_hour: tokenInfo = {
 };
 
 const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
+
+var price = "";
+function changePriceColor(num: any) {
+  if (num >= 0) {
+    price = "positive";
+  } else {
+    price = "negative";
+  }
+}
 ---
 
 <div class="token-info">
@@ -61,7 +70,10 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
         </div>
         <div class="tidbit">
           <p class="tidbit-title">Price Change</p>
-          <span class="positive"><b>{tokenInfo["pairs"][0]["priceChange"][value.time]}%</b></span>
+          {changePriceColor(-1)}
+          <span class={price}>
+            <b>{tokenInfo["pairs"][0]["priceChange"][value.time]}%</b>
+            </span>
         </div>
       </div>
     ))
