@@ -3,6 +3,20 @@ const tokenInfo = await fetch(
   "https://api.dexscreener.com/latest/dex/search?q=jkl"
 ).then((res) => res.json());
 
+// DEXSCREENER API TEST
+async function checkApi() {
+  const response = await fetch(
+    "https://api.dexscreener.com/latest/dex/search?q=jkl"
+  ).then((res) => res.text());
+  return response;
+}
+const temp = await checkApi()
+if (temp.charAt(0) == "{") {
+  console.log("DEXSCREENER GOOD")
+} else if (temp.charAt(0) == "<") {
+  console.log("DEXSCREENER BAD")
+}
+
 interface tokenInfo {
   title: string;
   time: string;

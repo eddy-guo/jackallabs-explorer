@@ -19,14 +19,14 @@ async function getValidatorsNew(chain: Chain) {
   return response;
 }
 
-// JACKAL API TEST: if json in str is printed, good - if error 500, bad
-async function getValidatorsText(chain: Chain) {
+// JACKAL API TEST
+async function checkApi(chain: Chain) {
   const response = await fetch(
     `${chain.api}/cosmos/staking/v1beta1/validators?status=BOND_STATUS_BONDED`
   ).then((res) => res.text());
   return response;
 }
-const temp = await getValidatorsText(jackalChain)
+const temp = await checkApi(jackalChain)
 if (temp.charAt(0) == "{") {
   console.log("JACKAL GOOD")
 } else if (temp.charAt(0) == "<") {
