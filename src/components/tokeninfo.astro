@@ -32,11 +32,10 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
 
 var price = "";
 function changePriceColor(num: any) {
-  if (num >= 0) {
-    price = "positive";
-  } else {
-    price = "negative";
-  }
+  (num == 0) ? price = "zero"
+   : (num > 0) ? price = "positive"
+  : (num < 0) ? price = "negative"
+  : console.log("Price change is not a number.")
 }
 ---
 
@@ -129,5 +128,8 @@ function changePriceColor(num: any) {
   }
   .negative {
     color: red;
+  }
+  .zero {
+    color: black;
   }
 </style>
