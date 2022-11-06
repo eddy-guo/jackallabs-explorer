@@ -32,50 +32,59 @@ const tokenInfoList = [five_min, one_hour, six_hour, twentyfour_hour];
 
 var price = "";
 function changePriceColor(num: any) {
-  (num == 0) ? price = "zero"
-   : (num > 0) ? price = "positive"
-  : (num < 0) ? price = "negative"
-  : console.log("Price change is not a number.")
+  num == 0
+    ? (price = "zero")
+    : num > 0
+    ? (price = "positive")
+    : num < 0
+    ? (price = "negative")
+    : console.log("Price change is not a number.");
 }
 ---
 
 <div class="token-info">
-    <div class="price-info">
-      <img src="/images/jkl.svg" alt="jkl-logo" />
-      <div class="price-info-text">
-        <p>USD Price: <b>${tokenInfo["pairs"][0]["priceUsd"]}</b></p>
-        <p>Native Price: <b>{tokenInfo["pairs"][0]["priceNative"]} OSMO</b></p>
-        <p>Liquidity: <b>${tokenInfo["pairs"][0]["liquidity"]["usd"].toLocaleString()}</b></p>
-      </div>
+  <div class="price-info">
+    <img src="/images/jkl.svg" alt="jkl-logo" />
+    <div class="price-info-text">
+      <p>USD Price: <b>${tokenInfo["pairs"][0]["priceUsd"]}</b></p>
+      <p>Native Price: <b>{tokenInfo["pairs"][0]["priceNative"]} OSMO</b></p>
+      <p>
+        Liquidity: <b
+          >${tokenInfo["pairs"][0]["liquidity"]["usd"].toLocaleString()}</b>
+      </p>
     </div>
+  </div>
   {
-    tokenInfoList.map((value: any) => (
-      <div class="token-info-component">
-        <h4>{value.title}</h4>
-        <div class="tidbit">
-          <p class="tidbit-title">Transactions</p>
-          <span>
-            Buys: <b>{tokenInfo["pairs"][0]["txns"][value.time]["buys"]}</b>
-          </span>
-          <span>
-            Sells: <b>{tokenInfo["pairs"][0]["txns"][value.time]["sells"]}</b>
-          </span>
-        </div>
-        <div class="tidbit">
-          <p class="tidbit-title">Overall Volume</p>
-          <span>
-            <b>${tokenInfo["pairs"][0]["volume"][value.time].toLocaleString()}</b>
-          </span>
-        </div>
-        <div class="tidbit">
-          <p class="tidbit-title">Price Change</p>
-          {changePriceColor(tokenInfo["pairs"][0]["priceChange"][value.time])}
-          <span class={price}>
-            <b>{tokenInfo["pairs"][0]["priceChange"][value.time]}%</b>
+    1 > 0 &&
+      tokenInfoList.map((value: any) => (
+        <div class="token-info-component">
+          <h4>{value.title}</h4>
+          <div class="tidbit">
+            <p class="tidbit-title">Transactions</p>
+            <span>
+              Buys: <b>{tokenInfo["pairs"][0]["txns"][value.time]["buys"]}</b>
             </span>
+            <span>
+              Sells: <b>{tokenInfo["pairs"][0]["txns"][value.time]["sells"]}</b>
+            </span>
+          </div>
+          <div class="tidbit">
+            <p class="tidbit-title">Overall Volume</p>
+            <span>
+              <b>
+                ${tokenInfo["pairs"][0]["volume"][value.time].toLocaleString()}
+              </b>
+            </span>
+          </div>
+          <div class="tidbit">
+            <p class="tidbit-title">Price Change</p>
+            {changePriceColor(tokenInfo["pairs"][0]["priceChange"][value.time])}
+            <span class={price}>
+              <b>{tokenInfo["pairs"][0]["priceChange"][value.time]}%</b>
+            </span>
+          </div>
         </div>
-      </div>
-    ))
+      ))
   }
 </div>
 
@@ -131,5 +140,8 @@ function changePriceColor(num: any) {
   }
   .zero {
     color: black;
+  }
+  .temp {
+    display: none;
   }
 </style>
