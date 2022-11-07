@@ -26,8 +26,8 @@ var maxValidators = jackalValidators["pagination"]["total"];
 jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - parseFloat(a.tokens));
 ---
 <div class="validators-header">
-  <span>Number of validators: <b>{maxValidators}</b></span>
-  <span>Current Jackal Block Height: <b>{jackalHeight}</b></span>
+  <span>Number of validators: <span class='validators-numbers'>{maxValidators}</span></span>
+  <span>Current Jackal Block Height: <span class='validators-numbers'>{jackalHeight}</span></span>
 </div>
 
 <div class="validators">
@@ -67,6 +67,9 @@ jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - p
   }
   .validators-header > span {
     padding-right: 50px;
+  }
+  .validators-numbers {
+    font-weight: bold;
   }
   .validators {
     background: white;

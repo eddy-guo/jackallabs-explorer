@@ -90,12 +90,10 @@ function changePriceColor(num: any) {
   <div class="price-info">
     <img src="/images/jkl.svg" alt="jkl-logo" />
     <div class="price-info-text">
-      <p>USD Price: <b>${tokenInfo["pairs"][0]["priceUsd"]}</b></p>
-      <p>Native Price: <b>{tokenInfo["pairs"][0]["priceNative"]} OSMO</b></p>
+      <p>USD Price: <span class="price-number">${tokenInfo["pairs"][0]["priceUsd"]}</span></p>
+      <p>Native Price: <span class="price-number">{tokenInfo["pairs"][0]["priceNative"]} OSMO</span></p>
       <p>
-        Liquidity: <b
-          >${tokenInfo["pairs"][0]["liquidity"]["usd"].toLocaleString()}</b
-        >
+        Liquidity: <span class="price-number">${tokenInfo["pairs"][0]["liquidity"]["usd"].toLocaleString()}</span>
       </p>
     </div>
   </div>
@@ -108,20 +106,16 @@ function changePriceColor(num: any) {
             <div class="tidbit">
               <p class="tidbit-title">Transactions</p>
               <span>
-                Buys: <b>{tokenInfo["pairs"][0]["txns"][value.time]["buys"]}</b>
+                Buys: <span class="price-number">{tokenInfo["pairs"][0]["txns"][value.time]["buys"]}</span>
               </span>
               <span>
-                Sells:{" "}
-                <b>{tokenInfo["pairs"][0]["txns"][value.time]["sells"]}</b>
+                Sells: <span class="price-number">{tokenInfo["pairs"][0]["txns"][value.time]["sells"]}</span>
               </span>
             </div>
             <div class="tidbit">
               <p class="tidbit-title">Overall Volume</p>
-              <span>
-                <b>
-                  $
-                  {tokenInfo["pairs"][0]["volume"][value.time].toLocaleString()}
-                </b>
+              <span class="price-number">
+                  ${tokenInfo["pairs"][0]["volume"][value.time].toLocaleString()}
               </span>
             </div>
             <div class="tidbit">
@@ -130,7 +124,7 @@ function changePriceColor(num: any) {
                 tokenInfo["pairs"][0]["priceChange"][value.time]
               )}
               <span class={price}>
-                <b>{tokenInfo["pairs"][0]["priceChange"][value.time]}%</b>
+                <span class="price-number">{tokenInfo["pairs"][0]["priceChange"][value.time]}%</span>
               </span>
             </div>
           </div>
@@ -159,6 +153,9 @@ function changePriceColor(num: any) {
   .price-info-text > p {
     flex-grow: 1;
     margin-bottom: 10px;
+  }
+  .price-number {
+    font-weight: bold;
   }
   .token-info-component,
   .price-info {
@@ -192,8 +189,5 @@ function changePriceColor(num: any) {
   }
   .zero {
     color: black;
-  }
-  #temp {
-    display: block;
   }
 </style>
