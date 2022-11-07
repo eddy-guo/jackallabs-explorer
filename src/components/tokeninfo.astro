@@ -48,100 +48,169 @@ function changePriceColor(num: any) {
   var sixhrID = document.getElementById("6HR");
   var twentyfourhrID = document.getElementById("24HR");
 
-  fiveminID.style.display = onehrID.style.display = sixhrID.style.display = "none";
+  fiveminID.style.display =
+    onehrID.style.display =
+    sixhrID.style.display =
+      "none";
   twentyfourhrID.style.display = "block";
 
   function toggleFiveMin() {
     if (fiveminID.style.display == "none") {
       fiveminID.style.display = "block";
-      onehrID.style.display = sixhrID.style.display = twentyfourhrID.style.display = "none";
+      onehrID.style.display =
+        sixhrID.style.display =
+        twentyfourhrID.style.display =
+          "none";
     }
   }
   function toggleOneHour() {
     if (onehrID.style.display == "none") {
       onehrID.style.display = "block";
-      fiveminID.style.display = sixhrID.style.display = twentyfourhrID.style.display = "none";
+      fiveminID.style.display =
+        sixhrID.style.display =
+        twentyfourhrID.style.display =
+          "none";
     }
   }
   function toggleSixHour() {
     if (sixhrID.style.display == "none") {
       sixhrID.style.display = "block";
-      fiveminID.style.display = onehrID.style.display = twentyfourhrID.style.display = "none";
+      fiveminID.style.display =
+        onehrID.style.display =
+        twentyfourhrID.style.display =
+          "none";
     }
-  }  function toggleTwentyFourHour() {
+  }
+  function toggleTwentyFourHour() {
     if (twentyfourhrID.style.display == "none") {
       twentyfourhrID.style.display = "block";
-      fiveminID.style.display = onehrID.style.display = sixhrID.style.display = "none";
+      fiveminID.style.display =
+        onehrID.style.display =
+        sixhrID.style.display =
+          "none";
     }
   }
 
   document.getElementById("5Mbutton").addEventListener("click", toggleFiveMin);
   document.getElementById("1HRbutton").addEventListener("click", toggleOneHour);
   document.getElementById("6HRbutton").addEventListener("click", toggleSixHour);
-  document.getElementById("24HRbutton").addEventListener("click", toggleTwentyFourHour);
+  document
+    .getElementById("24HRbutton")
+    .addEventListener("click", toggleTwentyFourHour);
 </script>
-
-<button id="5Mbutton">5M</button>
-<button id="1HRbutton">1HR</button>
-<button id="6HRbutton">6HR</button>
-<button id="24HRbutton">24HR</button>
 
 <div class="token-info">
   <div class="price-info">
     <img src="/images/jkl.svg" alt="jkl-logo" />
     <div class="price-info-text">
-      <p>USD Price: <span class="price-number">${tokenInfo["pairs"][0]["priceUsd"]}</span></p>
-      <p>Native Price: <span class="price-number">{tokenInfo["pairs"][0]["priceNative"]} OSMO</span></p>
       <p>
-        Liquidity: <span class="price-number">${tokenInfo["pairs"][0]["liquidity"]["usd"].toLocaleString()}</span>
+        USD Price: <span class="price-number"
+          >${tokenInfo["pairs"][0]["priceUsd"]}</span
+        >
+      </p>
+      <p>
+        Native Price: <span class="price-number"
+          >{tokenInfo["pairs"][0]["priceNative"]} OSMO</span
+        >
+      </p>
+      <p>
+        Liquidity: <span class="price-number"
+          >${tokenInfo["pairs"][0]["liquidity"]["usd"].toLocaleString()}</span
+        >
       </p>
     </div>
   </div>
-  {
-    tokenInfoList.map((value: any) => (
-      <>
-        {
-          <div id={value.title} class="token-info-component">
-            <h4>{value.title}</h4>
-            <div class="tidbit">
-              <p class="tidbit-title">Transactions</p>
-              <span>
-                Buys: <span class="price-number">{tokenInfo["pairs"][0]["txns"][value.time]["buys"]}</span>
-              </span>
-              <span>
-                Sells: <span class="price-number">{tokenInfo["pairs"][0]["txns"][value.time]["sells"]}</span>
-              </span>
+  <div class="token-info-links">
+    <h4>Relevant Links</h4>
+    <p class="tidbit">
+      Discover Jackal on <a href="https://ping.pub/jackal" target="_blank"
+        >ping.pub</a
+      >
+    </p>
+    <p class="tidbit">
+      Buy/Sell JKL on <a href="https://ping.pub/jackal" target="_blank"
+        >Osmosis Frontier</a
+      >
+    </p>
+    <p class="tidbit">
+      Live historical graph on <a
+        href="https://dexscreener.com/osmosis/832"
+        target="_blank">DEX Screener</a
+      >
+    </p>
+  </div>
+  <div class="historical-info">
+    <button id="5Mbutton">5M</button>
+    <button id="1HRbutton">1HR</button>
+    <button id="6HRbutton">6HR</button>
+    <button id="24HRbutton">24HR</button>
+    {
+      tokenInfoList.map((value: any) => (
+        <>
+          {
+            <div id={value.title}>
+              <h4>{value.title}</h4>
+              <div class="tidbit">
+                <p class="tidbit-title">Transactions</p>
+                <span>
+                  Buys:{" "}
+                  <span class="price-number">
+                    {tokenInfo["pairs"][0]["txns"][value.time]["buys"]}
+                  </span>
+                </span>
+                <span>
+                  Sells:{" "}
+                  <span class="price-number">
+                    {tokenInfo["pairs"][0]["txns"][value.time]["sells"]}
+                  </span>
+                </span>
+              </div>
+              <div class="tidbit">
+                <p class="tidbit-title">Overall Volume</p>
+                <span class="price-number">
+                  $
+                  {tokenInfo["pairs"][0]["volume"][value.time].toLocaleString()}
+                </span>
+              </div>
+              <div class="tidbit">
+                <p class="tidbit-title">Price Change</p>
+                {changePriceColor(
+                  tokenInfo["pairs"][0]["priceChange"][value.time]
+                )}
+                <span class={price}>
+                  <span class="price-number">
+                    {tokenInfo["pairs"][0]["priceChange"][value.time]}%
+                  </span>
+                </span>
+              </div>
             </div>
-            <div class="tidbit">
-              <p class="tidbit-title">Overall Volume</p>
-              <span class="price-number">
-                  ${tokenInfo["pairs"][0]["volume"][value.time].toLocaleString()}
-              </span>
-            </div>
-            <div class="tidbit">
-              <p class="tidbit-title">Price Change</p>
-              {changePriceColor(
-                tokenInfo["pairs"][0]["priceChange"][value.time]
-              )}
-              <span class={price}>
-                <span class="price-number">{tokenInfo["pairs"][0]["priceChange"][value.time]}%</span>
-              </span>
-            </div>
-          </div>
-        }
-      </>
-    ))
-  }
+          }
+        </>
+      ))
+    }
+  </div>
 </div>
 
 <style>
+  h4 {
+    font-size: 20px;
+  }
+  a {
+    font-weight: 600;
+    text-decoration: none;
+    color: #6699d4;
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 0.05em;
+  }
+  a:hover {
+    filter: brightness(1.2);
+  }
   .token-info {
     display: flex;
     background-color: white;
     border-left: 1px solid #d3d3d3;
-  }
-  .token-info > div {
-    flex-grow: 1;
   }
   .price-info {
     display: flex;
@@ -150,14 +219,15 @@ function changePriceColor(num: any) {
     display: flex;
     flex-direction: column;
   }
-  .price-info-text > p {
+  .price-info-text > p,
+  .token-info-links > p {
     flex-grow: 1;
-    margin-bottom: 10px;
   }
   .price-number {
     font-weight: bold;
   }
   .token-info-component,
+  .token-info-links,
   .price-info {
     padding: 20px 20px;
     /* display: flex; */
@@ -166,14 +236,18 @@ function changePriceColor(num: any) {
     border-right: 1px solid #d3d3d3;
     border-bottom: 1px solid #d3d3d3;
   }
-  .token-info-component > h4 {
-    font-size: 20px;
+  .token-info-links {
+    display: flex;
+    flex-direction: column;
   }
   .price-info {
     display: flex;
   }
   img {
     padding-right: 20px;
+  }
+  .historical-info {
+    padding: 0px 20px 20px 20px;
   }
   .tidbit {
     margin-bottom: 10px;
