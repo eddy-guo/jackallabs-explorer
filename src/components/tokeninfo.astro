@@ -152,18 +152,20 @@ function changePriceColor(num: any) {
               <h4>{value.title}</h4>
               <div class="tidbit">
                 <p class="tidbit-title">Transactions</p>
-                <span>
-                  Buys:{" "}
-                  <span class="price-number">
-                    {tokenInfo["pairs"][0]["txns"][value.time]["buys"]}
+                <div class="buy-sell">
+                  <span class="buys">
+                    Buys:{" "}
+                    <span class="price-number">
+                      {tokenInfo["pairs"][0]["txns"][value.time]["buys"]}
+                    </span>
                   </span>
-                </span>
-                <span>
-                  Sells:{" "}
-                  <span class="price-number">
-                    {tokenInfo["pairs"][0]["txns"][value.time]["sells"]}
+                  <span class="sells">
+                    Sells:{" "}
+                    <span class="price-number">
+                      {tokenInfo["pairs"][0]["txns"][value.time]["sells"]}
+                    </span>
                   </span>
-                </span>
+                </div>
                 <div>
                   <progress
                     value={tokenInfo["pairs"][0]["txns"][value.time]["buys"]}
@@ -204,7 +206,8 @@ function changePriceColor(num: any) {
   h4 {
     font-size: 20px;
   }
-  a, a:visited {
+  a,
+  a:visited {
     font-weight: 600;
     text-decoration: none;
     color: #6699d4;
@@ -219,7 +222,7 @@ function changePriceColor(num: any) {
   .token-info {
     display: flex;
     background-color: white;
-    border-left: 1px solid #d3d3d3;
+    border: 1px solid #d3d3d3;
   }
   .price-info {
     display: flex;
@@ -227,8 +230,11 @@ function changePriceColor(num: any) {
   .price-info-text {
     display: flex;
     flex-direction: column;
+    justify-content: center;
   }
-  .price-info-text > p,
+  .price-info-text > p:not(:last-child) {
+    margin-bottom: 30px;
+  }
   .token-info-links > p {
     flex-grow: 1;
   }
@@ -238,12 +244,10 @@ function changePriceColor(num: any) {
   .token-info-component,
   .token-info-links,
   .price-info {
-    padding: 20px 20px;
+    padding: 40px 40px;
     /* display: flex; */
     /* flex-grow: 1; */
-    border-top: 1px solid #d3d3d3;
     border-right: 1px solid #d3d3d3;
-    border-bottom: 1px solid #d3d3d3;
   }
   .token-info-links {
     display: flex;
@@ -254,14 +258,19 @@ function changePriceColor(num: any) {
   }
   img {
     padding-right: 20px;
+    margin: auto 0px;
+    width: 150px;
+    height: 150px;
   }
   .historical-info {
-    padding: 0px 20px 20px 20px;
+    padding: 40px;
+    border-right: 1px solid #d3d3d3;
   }
   progress {
-    height: 20px;	
+    width: 300px;
+    height: 10px;
     border: 0;
-    border-radius:50px;
+    border-radius: 50px;
   }
   progress::-webkit-progress-value {
     background-color: #47b000;
@@ -270,13 +279,19 @@ function changePriceColor(num: any) {
   }
   progress::-webkit-progress-bar {
     background-color: red;
-    border-radius:100px;
+    border-radius: 100px;
   }
   .tidbit {
     margin-bottom: 10px;
   }
   .tidbit-title {
     text-decoration: underline;
+  }
+  .buys {
+    float: left;
+  }
+  .sells {
+    float: right;
   }
   .positive {
     color: #47b000;

@@ -12,7 +12,7 @@ const validatorChain: Chain = {
   title: `${title}`,
   api: `${api}`,
   address: `${address}`,
-  image: `${image}`
+  image: `${image}`,
 };
 
 // get functions (might need to add err catch in functions)
@@ -69,13 +69,21 @@ if (
   <div class="chain-text">
     <h4><a href={"https://ping.pub/" + image} target="_blank">{title}</a></h4>
     <h2 class="rank">Rank {jackalRank}</h2>
-    <span>{maxValidators} Total Validators, {Number(validatorHeight).toLocaleString()} Blocks Produced</span>
+    <span
+      ><span class="bold">{maxValidators}</span> Total Validators, <span
+        class="bold">{Number(validatorHeight).toLocaleString()}</span
+      > Blocks Produced</span
+    >
   </div>
 </div>
 
 <style>
+  img {
+    height: 100px;
+    width: 100px;
+  }
   .chain {
-    padding: 20px 20px;
+    padding: 40px 40px;
     display: flex;
     flex-grow: 1;
     text-align: left;
@@ -85,7 +93,7 @@ if (
     border-bottom: 1px solid #d3d3d3;
   }
   .chain-text {
-    padding: 0px 20px;
+    padding: 0px 40px;
   }
   .chain-text > h4 {
     font-size: 16px;
@@ -105,13 +113,12 @@ if (
   }
   .chain-text > h2 {
     font-size: 30px;
-    margin: 10px 0px;
+    margin: 20px 0px;
   }
   .chain-text > p {
     margin-bottom: 5px;
   }
-  img {
-    height: 100px;
-    width: 100px;
+  .bold {
+    font-weight: bold;
   }
 </style>
