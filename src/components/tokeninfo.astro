@@ -164,6 +164,15 @@ function changePriceColor(num: any) {
                     {tokenInfo["pairs"][0]["txns"][value.time]["sells"]}
                   </span>
                 </span>
+                <div>
+                  <progress
+                    value={tokenInfo["pairs"][0]["txns"][value.time]["buys"]}
+                    max={
+                      tokenInfo["pairs"][0]["txns"][value.time]["buys"] +
+                      tokenInfo["pairs"][0]["txns"][value.time]["sells"]
+                    }
+                  />
+                </div>
               </div>
               <div class="tidbit">
                 <p class="tidbit-title">Overall Volume</p>
