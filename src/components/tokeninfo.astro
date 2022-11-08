@@ -204,7 +204,7 @@ function changePriceColor(num: any) {
   h4 {
     font-size: 20px;
   }
-  a {
+  a, a:visited {
     font-weight: 600;
     text-decoration: none;
     color: #6699d4;
@@ -259,14 +259,13 @@ function changePriceColor(num: any) {
     padding: 0px 20px 20px 20px;
   }
   progress {
-    width: 300px;
     height: 20px;	
     border: 0;
     border-radius:50px;
   }
   progress::-webkit-progress-value {
     background-color: #47b000;
-    border-radius: 100px 100px 100px 100px;
+    border-radius: 100px 0px 0px 100px;
     border-right: 10px;
   }
   progress::-webkit-progress-bar {

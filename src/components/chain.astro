@@ -67,10 +67,9 @@ if (
 <div class="chain">
   <img src={`/images/${image}.png`} alt={`${image} icon`} />
   <div class="chain-text">
-    <h4>{title}</h4>
-    <p class="rank">Rank {jackalRank}</p>
-    <p class="max-validators">{maxValidators} Total Validators</p>
-    <p class="block-height">{validatorHeight.toLocaleString()} Blocks Produced</p>
+    <h4><a href={"https://ping.pub/" + image} target="_blank">{title}</a></h4>
+    <h2 class="rank">Rank {jackalRank}</h2>
+    <span>{maxValidators} Total Validators, {Number(validatorHeight).toLocaleString()} Blocks Produced</span>
   </div>
 </div>
 
@@ -89,7 +88,24 @@ if (
     padding: 0px 20px;
   }
   .chain-text > h4 {
-    font-size: 20px;
+    font-size: 16px;
+  }
+  .chain-text > h4 > a,
+  .chain-text > h4 > a:visited {
+    font-weight: 600;
+    text-decoration: none;
+    color: black;
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 0.05em;
+  }
+  .chain-text > h4 > a:hover {
+    color: rgb(160, 160, 160);
+  }
+  .chain-text > h2 {
+    font-size: 30px;
+    margin: 10px 0px;
   }
   .chain-text > p {
     margin-bottom: 5px;
