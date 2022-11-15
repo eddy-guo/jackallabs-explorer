@@ -7,7 +7,7 @@ export interface Chain {
 }
 const { title, api, address, image } = Astro.props;
 
-// Redis - cache for api data
+// Redis setup
 
 // import Redis from "ioredis";
 // import fs from "fs";
@@ -19,41 +19,6 @@ const redis = new Redis({
   port: 14719,
   password: `${import.meta.env.REDIS_PASSWORD}`,
 });
-
-const test_array = {
-  Title: "Akash",
-  "Blocks Produced": "17",
-};
-
-// redis.set("foo", "bar", (err, reply) => {
-//   if (err) throw err;
-//   console.log(reply);
-// });
-
-// redis.set("test", JSON.stringify(test_array), (err, reply) => {
-//   if (err) throw err;
-//   console.log(reply);
-// });
-
-// redis.get("foo", (err, reply) => {
-//   if (err) throw err;
-//   console.log(reply);
-// });
-
-// redis.get("test", (err, reply) => {
-//   if (err) throw err;
-//   console.log(reply);
-// });
-
-const key_list = await redis.keys("*")
-
-for (let i = 0; i < key_list.length; i++) {
-  if (key_list[i] == null) { // would never happen
-    console.log("Key does not exist.")
-  } else {
-    console.log(key_list[i] + ": " + (await redis.get(key_list[i])))
-  }
-}
 
 // Chain object
 const validatorChain: Chain = {
@@ -110,13 +75,38 @@ if (
     }
   }
 }
+
+// Redis logic
+
+// Jackal Rank
+redis.set(`${title}`, jackalRank, "EX", 30, (err, reply) => {
+  if (err) throw err;
+});
+
+const key_list = await redis.keys("*");
+
+if (key_list.length == 0) {
+  console.log("No keys")
+}
+
+for (let i = 0; i < key_list.length; i++) {
+  console.log(key_list[i] + ": " + (await redis.get(key_list[i])));
+}
+
+// redis.get("test", (err, reply) => {
+//   if (err) throw err;
+// });
+
+// redis.flushdb( function (err, succeeded) {
+//     console.log(succeeded);
+// });
 ---
 
 <div class="chain">
   <img src={`/images/${image}.png`} alt={`${image} icon`} />
   <div class="chain-text">
     <h4><a href={"https://ping.pub/" + image} target="_blank">{title}</a></h4>
-    <h2 class="rank">Rank {jackalRank}</h2>
+    <h2 class="rank">Rank {await redis.get("jackalRank")}</h2>
     <span
       ><span class="bold">{maxValidators}</span> Total Validators, <span
         class="bold">{Number(validatorHeight).toLocaleString()}</span
