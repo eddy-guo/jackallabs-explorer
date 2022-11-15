@@ -25,25 +25,25 @@ const test_array = {
   "Blocks Produced": "17",
 };
 
-redis.set("foo", "bar", (err, reply) => {
-  if (err) throw err;
-  console.log(reply);
-});
+// redis.set("foo", "bar", (err, reply) => {
+//   if (err) throw err;
+//   console.log(reply);
+// });
 
-redis.set("test", JSON.stringify(test_array), (err, reply) => {
-  if (err) throw err;
-  console.log(reply);
-});
+// redis.set("test", JSON.stringify(test_array), (err, reply) => {
+//   if (err) throw err;
+//   console.log(reply);
+// });
 
-redis.get("foo", (err, reply) => {
-  if (err) throw err;
-  console.log(reply);
-});
+// redis.get("foo", (err, reply) => {
+//   if (err) throw err;
+//   console.log(reply);
+// });
 
-redis.get("test", (err, reply) => {
-  if (err) throw err;
-  console.log(reply);
-});
+// redis.get("test", (err, reply) => {
+//   if (err) throw err;
+//   console.log(reply);
+// });
 
 const key_list = await redis.keys("*")
 
