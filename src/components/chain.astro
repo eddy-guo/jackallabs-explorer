@@ -106,7 +106,7 @@ for (let i = 0; i < key_list.length; i++) {
   <img src={`/images/${image}.png`} alt={`${image} icon`} />
   <div class="chain-text">
     <h4><a href={"https://ping.pub/" + image} target="_blank">{title}</a></h4>
-    <h2 class="rank">Rank {await redis.get("jackalRank")}</h2>
+    <h2 class="rank">Rank {await redis.get(`${title}`)}</h2>
     <span
       ><span class="bold">{maxValidators}</span> Total Validators, <span
         class="bold">{Number(validatorHeight).toLocaleString()}</span
