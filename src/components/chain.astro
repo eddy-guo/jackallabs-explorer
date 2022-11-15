@@ -7,6 +7,54 @@ export interface Chain {
 }
 const { title, api, address, image } = Astro.props;
 
+// Redis - cache for api data
+
+// import Redis from "ioredis";
+// import fs from "fs";
+import Redis from "ioredis";
+import fs from "fs";
+
+const redis = new Redis({
+  host: "redis-14719.c274.us-east-1-3.ec2.cloud.redislabs.com",
+  port: 14719,
+  password: `${import.meta.env.REDIS_PASSWORD}`,
+});
+
+const test_array = {
+  Title: "Akash",
+  "Blocks Produced": "17",
+};
+
+redis.set("foo", "bar", (err, reply) => {
+  if (err) throw err;
+  console.log(reply);
+});
+
+redis.set("test", JSON.stringify(test_array), (err, reply) => {
+  if (err) throw err;
+  console.log(reply);
+});
+
+redis.get("foo", (err, reply) => {
+  if (err) throw err;
+  console.log(reply);
+});
+
+redis.get("test", (err, reply) => {
+  if (err) throw err;
+  console.log(reply);
+});
+
+const key_list = await redis.keys("*")
+
+for (let i = 0; i < key_list.length; i++) {
+  if (key_list[i] == null) { // would never happen
+    console.log("Key does not exist.")
+  } else {
+    console.log(key_list[i] + ": " + (await redis.get(key_list[i])))
+  }
+}
+
 // Chain object
 const validatorChain: Chain = {
   title: `${title}`,
