@@ -14,6 +14,7 @@ const { title, api, address, image } = Astro.props;
 import Redis from "ioredis";
 import fs from "fs";
 import { resolveObjectURL } from "buffer";
+import { connect } from "http2";
 
 const redis = new Redis({
   host: "redis-14719.c274.us-east-1-3.ec2.cloud.redislabs.com",
@@ -49,76 +50,106 @@ async function getMoreValidators(chain: Chain) {
 }
 
 // Validator Info
-const validators = await getValidators(validatorChain);
-const maxValidators = validators["result"]["total"];
-const moreValidators = await getMoreValidators(validatorChain);
-var jackalRank;
-
-// check if there is a page 2, then iterate accordingly
-async function checkPageTwo() {
-  if (
-    validators["result"]["total"] == validators["result"]["validators"].length
-  ) {
-    for (let i = 0; i < maxValidators; i++) {
-      if (
-        validators["result"]["validators"][i]["address"] ==
-        validatorChain.address
-      ) {
-        jackalRank = i + 1;
-      }
-    }
-  } else {
-    for (let i = 0; i < moreValidators["result"]["validators"].length; i++) {
-      if (
-        moreValidators["result"]["validators"][i]["address"] ==
-        validatorChain.address
-      ) {
-        jackalRank = validators["result"]["validators"].length + i + 1;
-      }
-    }
-  }
-}
-checkPageTwo();
+var jackalRank: any;
 
 // Redis logic
+
+// Jackal Rank
+function getJackalRank() {
+  return new Promise((resolve, reject) => {
+    redis.get(`${title}JackalRank`, async (err, reply) => {
+      if (err) return reject(err);
+      if (reply != null) {
+        // console.log("CACHE HIT");
+        return resolve(JSON.parse(reply));
+      }
+      // console.log("CACHE MISS");
+      const validators = await getValidators(validatorChain);
+      const maxValidators = validators["result"]["total"];
+      const moreValidators = await getMoreValidators(validatorChain);
+      function checkPageTwo() {
+        if (
+          validators["result"]["total"] ==
+          validators["result"]["validators"].length
+        ) {
+          for (let i = 0; i < maxValidators; i++) {
+            if (
+              validators["result"]["validators"][i]["address"] ==
+              validatorChain.address
+            ) {
+              jackalRank = i + 1;
+            }
+          }
+        } else {
+          for (
+            let i = 0;
+            i < moreValidators["result"]["validators"].length;
+            i++
+          ) {
+            if (
+              moreValidators["result"]["validators"][i]["address"] ==
+              validatorChain.address
+            ) {
+              jackalRank = validators["result"]["validators"].length + i + 1;
+            }
+          }
+        }
+        return jackalRank;
+      }
+      var jackalRankResult = checkPageTwo();
+      redis.set(`${title}JackalRank`, JSON.stringify(jackalRankResult), "EX", 30);
+      resolve(jackalRankResult);
+    });
+  });
+}
+var tempJackalRank = await getJackalRank();
+console.log(tempJackalRank);
 
 // Jackal Max Validators
 function getMaxValidators() {
   return new Promise((resolve, reject) => {
     redis.get(`${title}MaxValidators`, async (err, reply) => {
       if (err) return reject(err);
-      if (reply != null) return resolve(JSON.parse(reply));
+      if (reply != null) {
+        // console.log("CACHE HIT");
+        return resolve(JSON.parse(reply));
+      }
+      // console.log("CACHE MISS");
       const validators = await getValidators(validatorChain);
       const maxValidators = validators["result"]["total"];
       redis.set(`${title}MaxValidators`, JSON.stringify(maxValidators), "EX", 30);
-      resolve(maxValidators)
+      resolve(maxValidators);
     });
   });
 }
 var tempMaxValidators = await getMaxValidators();
-console.log(tempMaxValidators);
+// console.log(tempMaxValidators);
 
 // Validator Height (Blocks Produced)
 function getValidatorHeight() {
   return new Promise((resolve, reject) => {
     redis.get(`${title}ValidatorHeight`, async (err, reply) => {
       if (err) return reject(err);
-      if (reply != null) return resolve(JSON.parse(reply));
+      if (reply != null) {
+        // console.log("CACHE HIT");
+        return resolve(JSON.parse(reply));
+      }
+      // console.log("CACHE MISS");
       const validatorHeight = await getCurrentBlock(validatorChain);
-      redis.set(`${title}ValidatorHeight`, JSON.stringify(validatorHeight), "EX", 30);
-      resolve(validatorHeight)
+      redis.set( `${title}ValidatorHeight`, JSON.stringify(validatorHeight), "EX", 30);
+      resolve(validatorHeight);
     });
   });
 }
 var tempValidatorHeight = await getValidatorHeight();
-console.log(tempValidatorHeight);
+// console.log(tempValidatorHeight);
 ---
 
 <div class="chain">
   <img src={`/images/${image}.png`} alt={`${image} icon`} />
   <div class="chain-text">
     <h4><a href={"https://ping.pub/" + image} target="_blank">{title}</a></h4>
-    <h2 class="rank">Rank {jackalRank}</h2>
+    <h2 class="rank">Rank {tempJackalRank}</h2>
     <span
       ><span class="bold">{tempMaxValidators}</span> Total Validators, <span
         class="bold">{Number(tempValidatorHeight).toLocaleString()}</span
