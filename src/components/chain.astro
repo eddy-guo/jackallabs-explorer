@@ -49,7 +49,6 @@ async function getMoreValidators(chain: Chain) {
 }
 
 // Validator Info
-const validatorHeight = await getCurrentBlock(validatorChain);
 const validators = await getValidators(validatorChain);
 const maxValidators = validators["result"]["total"];
 const moreValidators = await getMoreValidators(validatorChain);
@@ -83,11 +82,8 @@ checkPageTwo();
 
 // Redis logic
 
-var tempValidatorHeight;
-
 // Jackal Max Validators
-
-function tempfunc() {
+function getMaxValidators() {
   return new Promise((resolve, reject) => {
     redis.get(`${title}MaxValidators`, async (err, reply) => {
       if (err) return reject(err);
@@ -99,8 +95,23 @@ function tempfunc() {
     });
   });
 }
-var tempMaxValidators = await tempfunc();
+var tempMaxValidators = await getMaxValidators();
 console.log(tempMaxValidators);
+
+// Validator Height (Blocks Produced)
+function getValidatorHeight() {
+  return new Promise((resolve, reject) => {
+    redis.get(`${title}ValidatorHeight`, async (err, reply) => {
+      if (err) return reject(err);
+      if (reply != null) return resolve(JSON.parse(reply));
+      const validatorHeight = await getCurrentBlock(validatorChain);
+      redis.set(`${title}ValidatorHeight`, JSON.stringify(validatorHeight), "EX", 30);
+      resolve(validatorHeight)
+    });
+  });
+}
+var tempValidatorHeight = await getValidatorHeight();
+console.log(tempValidatorHeight);
 ---
 
 <div class="chain">
@@ -110,7 +121,7 @@ console.log(tempMaxValidators);
     <h2 class="rank">Rank {jackalRank}</h2>
     <span
       ><span class="bold">{tempMaxValidators}</span> Total Validators, <span
-        class="bold">{Number(validatorHeight).toLocaleString()}</span
+        class="bold">{Number(tempValidatorHeight).toLocaleString()}</span
       > Blocks Produced</span
     >
   </div>
