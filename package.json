@@ -14,6 +14,7 @@
     "@astrojs/vercel": "^2.3.3",
     "astro": "^1.5.0",
     "ioredis": "^5.2.4",
+    "redis": "^4.5.0",
     "typescript": "^4.8.4"
   },
   "devDependencies": {
