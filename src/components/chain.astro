@@ -58,7 +58,7 @@ export function getOrSetCache(key: any, callback: any) {
       if (err) return reject(err);
       if (reply != null) return resolve(JSON.parse(reply));
       const newData = await callback;
-      redis.set(key, JSON.stringify(newData), "EX", 30);
+      redis.setex(key, 30, JSON.stringify(newData));
       resolve(newData);
     })
   })
@@ -98,7 +98,7 @@ function getJackalRank() {
         return jackalRank;
       }
       const newData = checkPageTwo();
-      redis.set(`${title}JackalRank`, JSON.stringify(newData), "EX", 30);
+      redis.setex(`${title}JackalRank`, 30, JSON.stringify(newData));
       resolve(newData);
     });
   });
