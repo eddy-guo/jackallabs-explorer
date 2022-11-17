@@ -2,7 +2,6 @@
 import {
   Chain,
   getCurrentBlock,
-  getValidators,
 } from "../components/chain.astro";
 
 const jackalChain: Chain = {
@@ -13,14 +12,14 @@ const jackalChain: Chain = {
 };
 
 // improved get functions (lazy fuck)
-async function getValidatorsNew(chain: Chain) {
+async function getJackalValidators(chain: Chain) {
   const response = await fetch(`${chain.api}/cosmos/staking/v1beta1/validators?status=BOND_STATUS_BONDED`);
   const data = await response.json();
   return data;
 }
 
 const jackalHeight = await getCurrentBlock(jackalChain);
-var jackalValidators = await getValidatorsNew(jackalChain);
+var jackalValidators = await getJackalValidators(jackalChain);
 var maxValidators = jackalValidators["pagination"]["total"];
 // sort jackalValidators["validators"] by decreasing order
 jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - parseFloat(a.tokens));
