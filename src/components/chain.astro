@@ -26,25 +26,25 @@ const validatorChain: Chain = {
 
 // get functions (might need to add err catch in functions)
 export async function getCurrentBlock(chain: Chain) {
-  const response = await fetch(`${chain.api}/blocks/latest`);
+  const response = await fetch(`${chain.api}/cosmos/base/tendermint/v1beta1/blocks/latest`);
   const data = await response.json();
   return data["block"]["header"]["height"];
 }
 
 async function getValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/latest`);
+  const response = await fetch(`${chain.api}/cosmos/base/tendermint/v1beta1/validatorsets/latest`);
   const data = await response.json();
   return data;
 }
 
 async function getMaxValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/latest`);
+  const response = await fetch(`${chain.api}/cosmos/base/tendermint/v1beta1/validatorsets/latest`);
   const data = await response.json();
-  return data["result"]["total"];
+  return data["pagination"]["total"];
 }
 
 async function getMoreValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/validatorsets/latest?page=2`);
+  const response = await fetch(`${chain.api}/cosmos/base/tendermint/v1beta1/validatorsets/latest?page=2`);
   const data = await response.json();
   return data;
 }
@@ -82,16 +82,17 @@ function getJackalRank() {
       const moreValidators = await getMoreValidators(validatorChain);
       function checkPageTwo() {
         var jackalRank;
-        if (validators["result"]["total"] == validators["result"]["validators"].length) {
+        if (validators["pagination"]["total"] == validators["validators"].length) {
+          console.log(validators["validators"].length)
           for (let i = 0; i < maxValidators; i++) {
-            if (validators["result"]["validators"][i]["address"] == validatorChain.address) {
+            if (validators["validators"][i]["address"] == validatorChain.address) {
               jackalRank = i + 1;
             }
           }
         } else {
-          for (let i = 0; i < moreValidators["result"]["validators"].length; i++) {
-            if (moreValidators["result"]["validators"][i]["address"] == validatorChain.address) {
-              jackalRank = validators["result"]["validators"].length + i + 1;
+          for (let i = 0; i < moreValidators["validators"].length; i++) {
+            if (moreValidators["validators"][i]["address"] == validatorChain.address) {
+              jackalRank = validators["validators"].length + i + 1;
             }
           }
         }
