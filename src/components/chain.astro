@@ -44,7 +44,7 @@ async function getMaxValidators(chain: Chain) {
 }
 
 async function getMoreValidators(chain: Chain) {
-  const response = await fetch(`${chain.api}/cosmos/base/tendermint/v1beta1/validatorsets/latest?page=2`);
+  const response = await fetch(`${chain.api}/cosmos/base/tendermint/v1beta1/validatorsets/latest?pagination.offset=150`);
   const data = await response.json();
   return data;
 }
@@ -83,7 +83,6 @@ function getJackalRank() {
       function checkPageTwo() {
         var jackalRank;
         if (validators["pagination"]["total"] == validators["validators"].length) {
-          console.log(validators["validators"].length)
           for (let i = 0; i < maxValidators; i++) {
             if (validators["validators"][i]["address"] == validatorChain.address) {
               jackalRank = i + 1;
