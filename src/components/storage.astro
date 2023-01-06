@@ -53,7 +53,7 @@ storageInfo["providers"].sort(
           <td>{value["address"]}</td>
           <td>{value["burned_contracts"]}</td>
           <td class="right-text">{value["totalspace"]} B (bytes)</td>
-          <td class="right-text">{value["freespace"]} B (bytes)</td>
+          <td class="right-text">{getFreeSpace(value["address"])} B (bytes)</td>
         </tr>
       ))
     }
