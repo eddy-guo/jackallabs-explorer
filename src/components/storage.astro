@@ -3,14 +3,25 @@ import {
   getOrSetCache,
 } from "../components/chain.astro";
 
-const data = await fetch(
+const storagedata = await fetch(
   "https://testnet-api.jackalprotocol.com/jackal-dao/canine-chain/storage/providers"
 ).then((res) => res.json());
 
-const storageInfo : any = await getOrSetCache("storageProviders", data);
-const totalProviders = storageInfo["pagination"]["total"];
+// function to get address freespace
+async function getFreeSpace(address: any) {
+  const response = await fetch(`https://testnet-api.jackalprotocol.com/jackal-dao/canine-chain/storage/freespace/${address}`);
+  const data = await response.json();
+  return data["space"];
+}
+
+const storageInfo : any = await getOrSetCache("storageProviders", storagedata["providers"]);
+const totalProviders = storagedata["pagination"]["total"];
+// add freespace to new array
+for (let i = 0; i < storageInfo.length; i++) {
+    storageInfo[i]["freespace"] = await getFreeSpace(storageInfo[i]["address"])
+}
 // sort storageInfo["totalspace"] by decreasing order
-storageInfo["providers"].sort((a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.totalspace));
+storageInfo.sort((a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.totalspace));
 ---
 <div class="storage-providers">
     <table>
@@ -19,10 +30,11 @@ storageInfo["providers"].sort((a: any, b: any) => parseFloat(b.totalspace) - par
         <th>PROVIDER IP</th>
         <th>PROVIDER ADDRESS</th>
         <th class="right-text">TOTAL SPACE</th>
+        <th class="right-text">FREE SPACE</th>
         <th class="right-text">BURNED CONTRACTS</th>
       </tr>
       {
-        storageInfo["providers"].map((value: any, index: any) => (
+        storageInfo.map((value: any, index: any) => (
           <tr>
             <td>{index + 1}</td>
             <td>
@@ -32,6 +44,7 @@ storageInfo["providers"].sort((a: any, b: any) => parseFloat(b.totalspace) - par
             </td>
             <td>{value["address"]}</td>
             <td class="right-text">{value["totalspace"]} Bytes</td>
+            <td class="right-text">{value["freespace"]} Bytes</td>
             <td class="right-text">{value["burned_contracts"]}</td>
           </tr>
         ))
