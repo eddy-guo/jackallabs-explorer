@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Chain from "../components/chain.astro";
 import Validators from "../components/validators.astro";
 import TokenInfo from "../components/tokeninfo.astro";
+import Storage from "../components/storage.astro";
 ---
 
 <Layout>
@@ -69,59 +70,72 @@ import TokenInfo from "../components/tokeninfo.astro";
       <p>Check out our validators!</p>
     </div>
     <Validators />
+    <div class="title">
+      <h3>Our Storage Providers</h3>
+      <p>
+        Learn how to become a Jackal <a
+          href="https://docs.jackaldao.com/docs/protocol/storageproviders/overview"
+          target="_blank">storage provider</a
+        >.
+      </p>
+      <Storage />
+    </div>
   </main>
-</Layout>
 
-<style>
-  .contact {
-    background-color: black;
-    color: white;
-    font-size: 15px;
-  }
-  .contact-text {
-    margin: 0;
-    list-style-type: none;
-    text-align: left;
-    padding-left: 20px;
-  }
-  .contact-text > li {
-    display: inline-block;
-    padding-right: 20px;
-    font-family: Monospace;
-  }
-  .contact-text > li > a,
-  .contact-text > li > a:visited {
-    text-decoration: none;
-    color: white;
-  }
-  .contact-text > li > a:hover {
-    text-decoration: underline;
-  }
-  .header {
-    padding: 20px 20px;
-  }
-  .header > p > a,
-  .header > p > a:visited {
-    font-weight: 600;
-    text-decoration: none;
-    color: #d65076;
-    text-decoration-line: underline;
-    text-decoration-style: dashed;
-    text-underline-offset: 0.15em;
-    text-decoration-thickness: 0.05em;
-  }
-  .header > p > a:hover {
-    filter: brightness(1.2);
-  }
-  main {
-  }
-  .title {
-    padding: 20px 20px;
-  }
-  .chain-validator {
-    /* font-size: 20px; */
-    display: flex;
-    background-color: white;
-    border-left: 1px solid #d3d3d3;
-  }
-</style>
+  <style>
+    .contact {
+      background-color: black;
+      color: white;
+      font-size: 15px;
+    }
+    .contact-text {
+      margin: 0;
+      list-style-type: none;
+      text-align: left;
+      padding-left: 20px;
+    }
+    .contact-text > li {
+      display: inline-block;
+      padding-right: 20px;
+      font-family: Monospace;
+    }
+    .contact-text > li > a,
+    .contact-text > li > a:visited {
+      text-decoration: none;
+      color: white;
+    }
+    .contact-text > li > a:hover {
+      text-decoration: underline;
+    }
+    .header {
+      padding: 20px 20px;
+    }
+    .header > p > a,
+    .header > p > a:visited,
+    .title > p > a,
+    .title > p > a:visited {
+      font-weight: 600;
+      text-decoration: none;
+      color: #d65076;
+      text-decoration-line: underline;
+      text-decoration-style: dashed;
+      text-underline-offset: 0.15em;
+      text-decoration-thickness: 0.05em;
+    }
+    .header > p > a:hover,
+    .title > p > a:hover  {
+      filter: brightness(1.2);
+    }
+    main {
+    }
+    .title {
+      padding: 20px 20px;
+    }
+    .chain-validator {
+      /* font-size: 20px; */
+      display: flex;
+      background-color: white;
+      border-left: 1px solid #d3d3d3;
+    }
+  </style>
+</Layout>
