@@ -33,9 +33,9 @@ storageInfo.sort((a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.tot
         <th>RANK</th>
         <th>PROVIDER IP</th>
         <th>PROVIDER ADDRESS</th>
+        <th class="right-text">BURNED CONTRACTS</th>
         <th class="right-text">TOTAL SPACE</th>
         <th class="right-text">FREE SPACE</th>
-        <th class="right-text">BURNED CONTRACTS</th>
       </tr>
       {
         storageInfo.map((value: any, index: any) => (
@@ -47,9 +47,9 @@ storageInfo.sort((a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.tot
               </a>
             </td>
             <td>{value["address"]}</td>
-            <td class="right-text">{value["totalspace"]} Bytes</td>
-            <td class="right-text">{value["freespace"]} Bytes</td>
             <td class="right-text">{value["burned_contracts"]}</td>
+            <td class="right-text">{value["totalspace"]} B (bytes)</td>
+            <td class="right-text">{value["freespace"]} B (bytes)</td>
           </tr>
         ))
       }
