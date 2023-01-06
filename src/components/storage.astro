@@ -1,0 +1,43 @@
+---
+import {
+  getOrSetCache,
+} from "../components/chain.astro";
+
+const data = await fetch(
+  "https://testnet-api.jackalprotocol.com/jackal-dao/canine-chain/storage/providers"
+).then((res) => res.json());
+
+const storageInfo : any = await getOrSetCache("storageProviders", data);
+const totalProviders = storageInfo["pagination"]["total"];
+// sort storageInfo["totalspace"] by decreasing order
+storageInfo["providers"].sort((a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.totalspace));
+---
+<div class="storage-providers">
+    <table>
+      <tr class="column-title">
+        <th>RANK</th>
+        <th>PROVIDER IP</th>
+        <th>PROVIDER ADDRESS</th>
+        <th class="right-text">TOTAL SPACE</th>
+        <th class="right-text">BURNED CONTRACTS</th>
+      </tr>
+      {
+        storageInfo["providers"].map((value: any, index: any) => (
+          <tr>
+            <td>{index + 1}</td>
+            <td>
+              <a href={value["ip"]} target="_blank">
+                {value["ip"]}
+              </a>
+            </td>
+            <td>{value["address"]}</td>
+            <td class="right-text">{value["totalspace"]} Bytes</td>
+            <td class="right-text">{value["burned_contracts"]}</td>
+          </tr>
+        ))
+      }
+    </table>
+  </div>
+<style>
+
+</style>
