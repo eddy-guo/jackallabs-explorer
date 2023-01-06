@@ -23,6 +23,10 @@ for (let i = 0; i < storageInfo.length; i++) {
 // sort storageInfo["totalspace"] by decreasing order
 storageInfo.sort((a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.totalspace));
 ---
+<div class="header">
+    <span>Number of providers: <span class="numbers">{totalProviders}</span></span>
+</div>
+  
 <div class="storage-providers">
     <table>
       <tr class="column-title">
@@ -51,6 +55,56 @@ storageInfo.sort((a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.tot
       }
     </table>
   </div>
-<style>
 
-</style>
+  <style>
+    .header {
+      background: white;
+      padding: 10px 20px;
+      text-align: left;
+      font-family: Monospace;
+      font-size: 15px;
+    }
+    .header > span {
+      padding-right: 50px;
+    }
+    .numbers {
+      font-weight: bold;
+    }
+    .storage-providers {
+      background: white;
+      display: flex;
+    }
+    .column-title {
+      font-family: Courier;
+      font-size: 15px;
+    }
+    .column-title > th {
+      border-top: 1px solid #d3d3d3;
+    }
+    table {
+      width: 100%;
+      flex-grow: 1;
+      text-align: left;
+      border-spacing: 0px;
+    }
+    th,
+    td {
+      padding: 10px 20px;
+      border-bottom: 1px solid #d3d3d3;
+    }
+    .right-text {
+      text-align: right;
+    }
+    /* might need more specific in the future if links are diff styles */
+    a, a:visited {
+      text-decoration: none;
+      color: black;
+      text-decoration-line: underline;
+      text-decoration-style: dashed;
+      text-underline-offset: 0.15em;
+      text-decoration-thickness: 0.05em;
+    }
+    a:hover {
+      color: rgb(160, 160, 160);
+    }
+  </style>
