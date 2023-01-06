@@ -14,17 +14,14 @@ async function getFreeSpace(address: any) {
   return data["space"];
 }
 
-const storageInfo: any = await getOrSetCache(
-  "storageProviders",
-  storagedata["providers"]
-);
-const totalProviders = storagedata["pagination"]["total"];
+const storageInfo: any = await getOrSetCache("storageProviders", storagedata);
+const totalProviders = storageInfo["pagination"]["total"];
 // add freespace to new array
-for (let i = 0; i < storageInfo.length; i++) {
-  storageInfo[i]["freespace"] = await getFreeSpace(storageInfo[i]["address"]);
-}
+// for (let i = 0; i < storageInfo["providers"].length; i++) {
+//   storageInfo["providers"][i]["freespace"] = await getFreeSpace(storageInfo["providers"][i]["address"]);
+// }
 // sort storageInfo["totalspace"] by decreasing order
-storageInfo.sort(
+storageInfo["providers"].sort(
   (a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.totalspace)
 );
 ---
@@ -45,7 +42,7 @@ storageInfo.sort(
       <th class="right-text">FREE SPACE</th>
     </tr>
     {
-      storageInfo.map((value: any, index: any) => (
+      storageInfo["providers"].map((value: any, index: any) => (
         <tr>
           <td>{index + 1}</td>
           <td>
