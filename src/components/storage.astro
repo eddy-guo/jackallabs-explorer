@@ -16,10 +16,6 @@ async function getFreeSpace(address: any) {
 
 const storageInfo: any = await getOrSetCache("storageProviders", storagedata);
 const totalProviders = storageInfo["pagination"]["total"];
-// add freespace to new array
-// for (let i = 0; i < storageInfo["providers"].length; i++) {
-//   storageInfo["providers"][i]["freespace"] = await getFreeSpace(storageInfo["providers"][i]["address"]);
-// }
 // sort storageInfo["totalspace"] by decreasing order
 storageInfo["providers"].sort(
   (a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.totalspace)
