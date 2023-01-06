@@ -1,7 +1,5 @@
 ---
-import {
-  getOrSetCache,
-} from "../components/chain.astro";
+import { getOrSetCache } from "../components/chain.astro";
 
 const storagedata = await fetch(
   "https://testnet-api.jackalprotocol.com/jackal-dao/canine-chain/storage/providers"
@@ -9,102 +7,112 @@ const storagedata = await fetch(
 
 // function to get address freespace
 async function getFreeSpace(address: any) {
-  const response = await fetch(`https://testnet-api.jackalprotocol.com/jackal-dao/canine-chain/storage/freespace/${address}`);
+  const response = await fetch(
+    `https://testnet-api.jackalprotocol.com/jackal-dao/canine-chain/storage/freespace/${address}`
+  );
   const data = await response.json();
   return data["space"];
 }
 
-const storageInfo : any = await getOrSetCache("storageProviders", storagedata["providers"]);
+const storageInfo: any = await getOrSetCache(
+  "storageProviders",
+  storagedata["providers"]
+);
 const totalProviders = storagedata["pagination"]["total"];
 // add freespace to new array
 for (let i = 0; i < storageInfo.length; i++) {
-    storageInfo[i]["freespace"] = await getFreeSpace(storageInfo[i]["address"])
+  storageInfo[i]["freespace"] = await getFreeSpace(storageInfo[i]["address"]);
 }
 // sort storageInfo["totalspace"] by decreasing order
-storageInfo.sort((a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.totalspace));
+storageInfo.sort(
+  (a: any, b: any) => parseFloat(b.totalspace) - parseFloat(a.totalspace)
+);
 ---
-<div class="header">
-    <span>Number of providers: <span class="numbers">{totalProviders}</span></span>
-</div>
-  
-<div class="storage-providers">
-    <table>
-      <tr class="column-title">
-        <th>RANK</th>
-        <th>PROVIDER IP</th>
-        <th>PROVIDER ADDRESS</th>
-        <th class="right-text">BURNED CONTRACTS</th>
-        <th class="right-text">TOTAL SPACE</th>
-        <th class="right-text">FREE SPACE</th>
-      </tr>
-      {
-        storageInfo.map((value: any, index: any) => (
-          <tr>
-            <td>{index + 1}</td>
-            <td>
-              <a href={value["ip"]} target="_blank">
-                {value["ip"]}
-              </a>
-            </td>
-            <td>{value["address"]}</td>
-            <td class="right-text">{value["burned_contracts"]}</td>
-            <td class="right-text">{value["totalspace"]} B (bytes)</td>
-            <td class="right-text">{value["freespace"]} B (bytes)</td>
-          </tr>
-        ))
-      }
-    </table>
-  </div>
 
-  <style>
-    .header {
-      background: white;
-      padding: 10px 20px;
-      text-align: left;
-      font-family: Monospace;
-      font-size: 15px;
+<div class="header">
+  <span>Number of providers: <span class="numbers">{totalProviders}</span></span
+  >
+</div>
+
+<div class="storage-providers">
+  <table>
+    <tr class="column-title">
+      <th>RANK</th>
+      <th>PROVIDER IP</th>
+      <th>PROVIDER ADDRESS</th>
+      <th>BURNED CONTRACTS</th>
+      <th class="right-text">TOTAL SPACE</th>
+      <th class="right-text">FREE SPACE</th>
+    </tr>
+    {
+      storageInfo.map((value: any, index: any) => (
+        <tr>
+          <td>{index + 1}</td>
+          <td>
+            <a href={value["ip"]} target="_blank">
+              {value["ip"]}
+            </a>
+          </td>
+          <td>{value["address"]}</td>
+          <td>{value["burned_contracts"]}</td>
+          <td class="right-text">{value["totalspace"]} B (bytes)</td>
+          <td class="right-text">{value["freespace"]} B (bytes)</td>
+        </tr>
+      ))
     }
-    .header > span {
-      padding-right: 50px;
-    }
-    .numbers {
-      font-weight: bold;
-    }
-    .storage-providers {
-      background: white;
-      display: flex;
-    }
-    .column-title {
-      font-family: Courier;
-      font-size: 15px;
-    }
-    .column-title > th {
-      border-top: 1px solid #d3d3d3;
-    }
-    table {
-      width: 100%;
-      flex-grow: 1;
-      text-align: left;
-      border-spacing: 0px;
-    }
-    th,
-    td {
-      padding: 10px 20px;
-      border-bottom: 1px solid #d3d3d3;
-    }
-    .right-text {
-      text-align: right;
-    }
-    /* might need more specific in the future if links are diff styles */
-    a, a:visited {
-      text-decoration: none;
-      color: black;
-      text-decoration-line: underline;
-      text-decoration-style: dashed;
-      text-underline-offset: 0.15em;
-      text-decoration-thickness: 0.05em;
-    }
-    a:hover {
-      color: rgb(160, 160, 160);
-    }
-  </style>
+  </table>
+</div>
+
+<style>
+  .header {
+    background: white;
+    padding: 10px 20px;
+    text-align: left;
+    font-family: Monospace;
+    font-size: 15px;
+  }
+  .header > span {
+    padding-right: 50px;
+  }
+  .numbers {
+    font-weight: bold;
+  }
+  .storage-providers {
+    background: white;
+    display: flex;
+  }
+  .column-title {
+    font-family: Courier;
+    font-size: 15px;
+  }
+  .column-title > th {
+    border-top: 1px solid #d3d3d3;
+  }
+  table {
+    width: 100%;
+    flex-grow: 1;
+    text-align: left;
+    border-spacing: 0px;
+  }
+  th,
+  td {
+    padding: 10px 20px;
+    border-bottom: 1px solid #d3d3d3;
+  }
+  .right-text {
+    text-align: right;
+  }
+  /* might need more specific in the future if links are diff styles */
+  a,
+  a:visited {
+    text-decoration: none;
+    color: black;
+    text-decoration-line: underline;
+    text-decoration-style: dashed;
+    text-underline-offset: 0.15em;
+    text-decoration-thickness: 0.05em;
+  }
+  a:hover {
+    color: rgb(160, 160, 160);
+  }
+</style>
