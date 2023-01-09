@@ -4,8 +4,9 @@ export interface Chain {
   api: string;
   address: string;
   image: string;
+  short: string;
 }
-const { title, api, address, image } = Astro.props;
+const { title, api, address, image, short } = Astro.props;
 
 // Redis setup
 import Redis from "ioredis";
@@ -22,6 +23,7 @@ const validatorChain: Chain = {
   api: `${api}`,
   address: `${address}`,
   image: `${image}`,
+  short: `${short}`,
 };
 
 // get functions (might need to add err catch in functions)
@@ -63,7 +65,7 @@ export function getOrSetCache(key: any, callback: any) {
     })
   })
 }
-// Max Validators and Validator Height
+// Max Validators, Validator Height, Voting Power
 const maxValidators = await getOrSetCache(`${title}MaxValidators`, getMaxValidators(validatorChain));
 const validatorHeight = await getCurrentBlock(validatorChain);
 
@@ -80,22 +82,27 @@ function getJackalRank() {
       const validators = await getValidators(validatorChain);
       const maxValidators = await getMaxValidators(validatorChain);
       const moreValidators = await getMoreValidators(validatorChain);
+      var votingPower;
       function checkPageTwo() {
         var jackalRank;
+        var votingPower;
         if (validators["pagination"]["total"] == validators["validators"].length) {
           for (let i = 0; i < maxValidators; i++) {
             if (validators["validators"][i]["address"] == validatorChain.address) {
               jackalRank = i + 1;
+              votingPower = validators["validators"][i]["voting_power"];
             }
           }
         } else {
           for (let i = 0; i < moreValidators["validators"].length; i++) {
             if (moreValidators["validators"][i]["address"] == validatorChain.address) {
               jackalRank = validators["validators"].length + i + 1;
+              votingPower = moreValidators["validators"][i]["voting_power"];
             }
           }
         }
-        return jackalRank;
+        const duo = [jackalRank, votingPower];
+        return duo;
       }
       const newData = checkPageTwo();
       redis.setex(`${title}JackalRank`, 30, JSON.stringify(newData));
@@ -103,14 +110,14 @@ function getJackalRank() {
     });
   });
 }
-const jackalRank = await getJackalRank();
+const rankAndTokens: any = await getJackalRank();
 ---
 
 <div class="chain">
   <img src={`/images/${image}.png`} alt={`${image} icon`} />
   <div class="chain-text">
     <h4><a href={"https://ping.pub/" + image} target="_blank">{title}</a></h4>
-    <h2 class="rank">Rank {jackalRank}</h2>
+    <h2 class="rank">Rank {rankAndTokens[0]} - {Number(rankAndTokens[1]).toLocaleString()} {validatorChain.short}</h2>
     <span
       ><span class="bold">{maxValidators}</span> Total Validators, <span
         class="bold">{Number(validatorHeight).toLocaleString()}</span
