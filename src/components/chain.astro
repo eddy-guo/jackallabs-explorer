@@ -63,9 +63,9 @@ export function getOrSetCache(key: any, callback: any) {
     })
   })
 }
-// Max Validators and Validator Height - getOrSetCache
+// Max Validators and Validator Height
 const maxValidators = await getOrSetCache(`${title}MaxValidators`, getMaxValidators(validatorChain));
-const validatorHeight = await getOrSetCache(`${title}ValidatorHeight`, getCurrentBlock(validatorChain));
+const validatorHeight = await getCurrentBlock(validatorChain);
 
 // Jackal Rank - custom
 function getJackalRank() {

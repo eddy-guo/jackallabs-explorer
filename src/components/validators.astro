@@ -21,7 +21,7 @@ async function getJackalValidators(chain: Chain) {
 
 const jackalValidators: any = await getOrSetCache("JackalMaxValidators", getJackalValidators(jackalChain));
 const maxValidators = jackalValidators["pagination"]["total"];
-const jackalHeight = await getOrSetCache("JackalHeight", getCurrentBlock(jackalChain));
+const jackalHeight = await getCurrentBlock(jackalChain);
 // sort jackalValidators["validators"] by decreasing order
 jackalValidators["validators"].sort((a: any, b: any) => parseFloat(b.tokens) - parseFloat(a.tokens));
 ---
