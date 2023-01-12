@@ -117,7 +117,7 @@ const rankAndTokens: any = await getJackalRank();
   <img src={`/images/${image}.png`} alt={`${image} icon`} />
   <div class="chain-text">
     <h4><a href={"https://ping.pub/" + image} target="_blank">{title}</a></h4>
-    <h2 class="rank">Rank {rankAndTokens[0]} - {Number(rankAndTokens[1]).toLocaleString()} {validatorChain.short}</h2>
+    <h2 class="rank">Rank {rankAndTokens[0]} — {Number(rankAndTokens[1]).toLocaleString()} {validatorChain.short}</h2>
     <span
       ><span class="bold">{maxValidators}</span> Total Validators, <span
         class="bold">{Number(validatorHeight).toLocaleString()}</span
@@ -161,7 +161,7 @@ const rankAndTokens: any = await getJackalRank();
     color: rgb(160, 160, 160);
   }
   .chain-text > h2 {
-    font-size: 30px;
+    font-size: 25px;
     margin: 20px 0px;
   }
   .chain-text > p {
